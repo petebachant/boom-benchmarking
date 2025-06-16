@@ -48,33 +48,34 @@ pipeline:
         - path: data/kowalski.NED.json
           delete_before_run: true
           storage: null
-    # benchmark-mongo:
-    #   kind: jupyter-notebook
-    #   notebook_path: notebooks/benchmark-mongo.ipynb
-    #   environment: mongo-py
-    #   inputs:
-    #     - docker-compose.yaml
-    #   outputs:
-    #     - path: results/mongo.json
-    #       storage: git
-    # benchmark-pg:
-    #   kind: jupyter-notebook
-    #   script_path: notebooks/benchmark-pg.ipynb
-    #   environment: pg-py
-    #   inputs:
-    #     - docker-compose.yaml
-    #     - envs/Dockerfile.pg-q3c
-    #   outputs:
-    #     - path: results/pg.json
-    #       storage: git
-    # summarize:
-    #   kind: jupyter-notebook
-    #   notebook_path: notebooks/summarize.ipynb
-    #   environment: pg-py
-    #   inputs:
-    #     - results/mongo.json
-    #     - results/pg.json
-    #   store_html_with: git
+    benchmark-mongo:
+      kind: jupyter-notebook
+      notebook_path: notebooks/benchmark-mongo.ipynb
+      environment: mongo-py
+      inputs:
+        - docker-compose.yaml
+      outputs:
+        - path: results/mongo.json
+          storage: git
+    benchmark-pg:
+      kind: jupyter-notebook
+      script_path: notebooks/benchmark-pg.ipynb
+      environment: pg-py
+      inputs:
+        - docker-compose.yaml
+        - envs/Dockerfile.pg-q3c
+      outputs:
+        - path: results/pg.json
+          storage: git
+    summarize:
+      kind: jupyter-notebook
+      notebook_path: notebooks/summarize.ipynb
+      environment: pg-py
+      inputs:
+        - results/mongo.json
+        - results/pg.json
+      html_storage: git
+      ipynb_storage: git
 datasets:
   - path: data/kowalski.NED.json.gz
     title: NED alert archive from Kowalski
