@@ -1,20 +1,103 @@
 owner: petebachant
 name: boom-benchmarking
-title: Benchmarking BOOM
+title: Benchmarking BOOM database options
 description:
 git_repo_url: https://github.com/petebachant/boom-benchmarking
 questions:
-  - Which configuration is faster to insert 1 million alerts?
-  - Which configuration is faster to query 1 million alerts?
+  - Which configuration is faster to insert ~1 million alerts?
+  - Which configuration is faster to query ~1 million alerts?
   - Which configuration is faster to run a cone search?
   - Which configuration is faster to run a set of filters?
+dependencies:
+  - tar
+  - gunzip
+  - wget
+  - docker
+  - uv
 environments:
-  pg-q3c:
-    kind: docker
-    image: pg16-q3c-boom
-    path: envs/Dockerfile.pg-q3c
-    description: PostgreSQL 16 with Q3C extension.
-  boom:
-    kind: docker
-    image: boom
-    path: boom/Dockerfile
+  mongo-py:
+    kind: uv-venv
+    python: "3.12"
+    path: envs/mongo-py.txt
+    prefix: .venvs/mongo-py
+  pg-py:
+    kind: uv-venv
+    python: "3.12"
+    path: envs/pg-py.txt
+    prefix: .venvs/pg-py
+pipeline:
+  stages:
+    get-ztf-data:
+      kind: shell-script
+      script_path: scripts/download-ztf-data.sh
+      environment: _system
+      outputs:
+        - path: data/ztf_public_20250614.tar.gz
+          delete_before_run: false
+          storage: null
+        - path: data/ztf_public_20250614
+          delete_before_run: true
+          storage: null
+    extract-ned-data:
+      kind: shell-command
+      command: gunzip -k data/kowalski.NED.json.gz
+      environment: _system
+      inputs:
+        - data/kowalski.NED.json.gz
+      outputs:
+        - path: data/kowalski.NED.json
+          delete_before_run: true
+          storage: null
+    # benchmark-mongo:
+    #   kind: jupyter-notebook
+    #   notebook_path: notebooks/benchmark-mongo.ipynb
+    #   environment: mongo-py
+    #   inputs:
+    #     - docker-compose.yaml
+    #   outputs:
+    #     - path: results/mongo.json
+    #       storage: git
+    # benchmark-pg:
+    #   kind: jupyter-notebook
+    #   script_path: notebooks/benchmark-pg.ipynb
+    #   environment: pg-py
+    #   inputs:
+    #     - docker-compose.yaml
+    #     - envs/Dockerfile.pg-q3c
+    #   outputs:
+    #     - path: results/pg.json
+    #       storage: git
+    # summarize:
+    #   kind: jupyter-notebook
+    #   notebook_path: notebooks/summarize.ipynb
+    #   environment: pg-py
+    #   inputs:
+    #     - results/mongo.json
+    #     - results/pg.json
+    #   store_html_with: git
+datasets:
+  - path: data/kowalski.NED.json.gz
+    title: NED alert archive from Kowalski
+  - path: data/ztf_public_20250614.tar.gz
+    title: ZTF public alert archive for June 14, 2025
+    imported_from:
+      url: https://ztf.uw.edu/alerts/public/ztf_public_20250614.tar.gz
+notebooks:
+  - path: notebooks/benchmark-mongo.ipynb
+    title: Benchmark MongoDB
+    description: >
+      This notebook benchmarks the performance of MongoDB for inserting
+      and querying alerts.
+  - path: notebooks/benchmark-pg.ipynb
+    title: Benchmark PostgreSQL
+    description: >
+      This notebook benchmarks the performance of PostgreSQL for inserting
+      and querying alerts.
+  - path: notebooks/summarize.ipynb
+    title: Summarize Results
+    description: >
+      This notebook summarizes the results of the MongoDB and PostgreSQL benchmarks.
+      It compares the performance of both databases in terms of insertion speed,
+      query speed, and filtering capabilities.
+showcase:
+  - notebook: notebooks/summarize.ipynb

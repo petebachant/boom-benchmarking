@@ -1,0 +1,32 @@
+schema: '2.0'
+stages:
+  get-ztf-data:
+    cmd: bash --noprofile --norc scripts/download-ztf-data.sh
+    deps:
+    - path: scripts/download-ztf-data.sh
+      hash: md5
+      md5: 410f8bdd4cc53ec6b98572034639df45
+      size: 484
+      isexec: true
+    outs:
+    - path: data/ztf_public_20250614
+      hash: md5
+      md5: 57a45a392cfcc5c148261ec8238cb639.dir
+      size: 15932892200
+      nfiles: 210240
+    - path: data/ztf_public_20250614.tar.gz
+      hash: md5
+      md5: 7f63a5975f2643a7780a5fedfe3ce95a
+      size: 10260752459
+  extract-ned-data:
+    cmd: bash --noprofile --norc -c "gunzip -k data/kowalski.NED.json.gz"
+    deps:
+    - path: data/kowalski.NED.json.gz
+      hash: md5
+      md5: decd3ed39729067d0990aa299c4f513d
+      size: 966995306
+    outs:
+    - path: data/kowalski.NED.json
+      hash: md5
+      md5: 39875806dc1306ca9778ee24cb2ec07e
+      size: 4060622282

@@ -199,3 +199,7 @@ data/postgres
 *.gz
 data/ztf_public_20250614
 data/*.gz
+
+data/ned/kowalski.NED.json
+
+data/kowalski.NED.json
