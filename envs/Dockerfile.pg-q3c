@@ -1,0 +1,23 @@
+FROM postgres:16
+
+# Install required packages for building Q3C
+RUN apt-get update && \
+    apt-get install -y \
+      git \
+      make \
+      gcc \
+      libzstd-dev \
+      liblz4-dev \
+      zlib1g-dev \
+      libreadline-dev \
+      postgresql-server-dev-16 && \
+    rm -rf /var/lib/apt/lists/*
+
+# Clone and build Q3C
+RUN git clone https://github.com/segasai/q3c.git /q3c && \
+    cd /q3c && \
+    make && \
+    make install
+
+# Add init script to create q3c extension on startup
+COPY init-q3c.sql /docker-entrypoint-initdb.d/init-q3c.sql

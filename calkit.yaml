@@ -3,3 +3,14 @@ name: boom-benchmarking
 title: Benchmarking BOOM
 description:
 git_repo_url: https://github.com/petebachant/boom-benchmarking
+questions:
+  - Which configuration is faster to insert 1 million alerts?
+  - Which configuration is faster to query 1 million alerts?
+  - Which configuration is faster to run a cone search?
+  - Which configuration is faster to run a set of filters?
+environments:
+  pg-q3c:
+    kind: docker
+    image: pg16-q3c-boom
+    path: envs/Dockerfile.pg-q3c
+    description: PostgreSQL 16 with Q3C extension.
