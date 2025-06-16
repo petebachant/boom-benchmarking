@@ -10,8 +10,6 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=mongoadmin
       - MONGO_INITDB_ROOT_PASSWORD=password
       - MONGO_INITDB_DATABASE=boom
-    volumes:
-      - ./data/mongo:/data/db
     restart: always
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
@@ -28,8 +26,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=boom
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
     restart: always
     build:
       context: ./envs
