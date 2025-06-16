@@ -31,3 +31,6 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     restart: always
+    build:
+      context: ./envs
+      dockerfile: Dockerfile.pg-q3c
