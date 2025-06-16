@@ -14,3 +14,7 @@ environments:
     image: pg16-q3c-boom
     path: envs/Dockerfile.pg-q3c
     description: PostgreSQL 16 with Q3C extension.
+  boom:
+    kind: docker
+    image: boom
+    path: boom/Dockerfile
