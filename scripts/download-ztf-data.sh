@@ -7,7 +7,7 @@ if [ -f data/${FNAME} ]; then
     echo "File data/${FNAME} already exists; Skipping download"
 else
     echo "Downloading ZTF data to data/${FNAME}"
-    wget -O data/${FNAME} https://ztf.uw.edu/alerts/public/${FNAME}
+    curl -o data/${FNAME} https://ztf.uw.edu/alerts/public/${FNAME}
 fi
 
 # Data directory is the file name without extension

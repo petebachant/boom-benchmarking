@@ -11,7 +11,7 @@ questions:
 dependencies:
   - tar
   - gunzip
-  - wget
+  - curl
   - docker
   - uv
 environments:
