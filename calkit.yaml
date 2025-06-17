@@ -19,12 +19,12 @@ environments:
     kind: uv-venv
     python: "3.12"
     path: envs/mongo-py.txt
-    prefix: .venvs/mongo-py
+    prefix: .venv-mongo-py
   pg-py:
     kind: uv-venv
     python: "3.12"
     path: envs/pg-py.txt
-    prefix: .venvs/pg-py
+    prefix: .venv-pg-py
 pipeline:
   stages:
     get-ztf-data:
