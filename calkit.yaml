@@ -17,7 +17,7 @@ dependencies:
 environments:
   py:
     kind: uv-venv
-    python: "3.12.*"
+    python: "3.12.4"
     path: envs/py.txt
     prefix: .venv
 pipeline:
