@@ -54,7 +54,7 @@ pipeline:
           storage: git
     benchmark-pg:
       kind: jupyter-notebook
-      script_path: notebooks/benchmark-pg.ipynb
+      notebook_path: notebooks/benchmark-pg.ipynb
       environment: py
       inputs:
         - docker-compose.yaml
