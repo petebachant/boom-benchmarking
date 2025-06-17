@@ -5,7 +5,7 @@ stages:
     deps:
     - path: scripts/download-ztf-data.sh
       hash: md5
-      md5: 410f8bdd4cc53ec6b98572034639df45
+      md5: f16292f742e6aae215eb634e2e3da0ec
       size: 484
       isexec: true
     outs:
@@ -30,3 +30,15 @@ stages:
       hash: md5
       md5: 39875806dc1306ca9778ee24cb2ec07e
       size: 4060622282
+  _check-env-py:
+    cmd: calkit check venv envs/py.txt -o .calkit/env-locks/py.txt
+    deps:
+    - path: envs/py.txt
+      hash: md5
+      md5: 73738d1dc41436417758399dc9866b07
+      size: 67
+    outs:
+    - path: .calkit/env-locks/py.txt
+      hash: md5
+      md5: 48ccea7f21c69853ba6fc06eafc0caf9
+      size: 1950
