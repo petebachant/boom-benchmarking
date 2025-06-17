@@ -22,3 +22,6 @@ services:
     build:
       context: ./envs
       dockerfile: Dockerfile.pg-q3c
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
