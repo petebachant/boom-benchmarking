@@ -1,0 +1,5 @@
+outs:
+- md5: decd3ed39729067d0990aa299c4f513d
+  size: 966995306
+  hash: md5
+  path: kowalski.NED.json.gz
