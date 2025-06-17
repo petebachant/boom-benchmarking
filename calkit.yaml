@@ -15,16 +15,11 @@ dependencies:
   - docker
   - uv
 environments:
-  mongo-py:
+  py:
     kind: uv-venv
-    python: "3.12"
-    path: envs/mongo-py.txt
-    prefix: .venv-mongo-py
-  pg-py:
-    kind: uv-venv
-    python: "3.12"
-    path: envs/pg-py.txt
-    prefix: .venv-pg-py
+    python: "3.12.*"
+    path: envs/py.txt
+    prefix: .venv
 pipeline:
   stages:
     get-ztf-data:
@@ -51,7 +46,7 @@ pipeline:
     benchmark-mongo:
       kind: jupyter-notebook
       notebook_path: notebooks/benchmark-mongo.ipynb
-      environment: mongo-py
+      environment: py
       inputs:
         - docker-compose.yaml
       outputs:
@@ -60,7 +55,7 @@ pipeline:
     benchmark-pg:
       kind: jupyter-notebook
       script_path: notebooks/benchmark-pg.ipynb
-      environment: pg-py
+      environment: py
       inputs:
         - docker-compose.yaml
         - envs/Dockerfile.pg-q3c
@@ -70,7 +65,7 @@ pipeline:
     summarize:
       kind: jupyter-notebook
       notebook_path: notebooks/summarize.ipynb
-      environment: pg-py
+      environment: py
       inputs:
         - results/mongo.json
         - results/pg.json
