@@ -2,3 +2,6 @@ psycopg2
 pymongo
 ipykernel
 fastavro
+tqdm
+jupyter
+ipywidgets
