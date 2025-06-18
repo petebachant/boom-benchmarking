@@ -1,4 +1,5 @@
 {
-    "ztf_alerts_insert_time_s": 33.82646179199219,
-    "cone_search_query_time_s": 0.08918094635009766
+    "n_ztf_alerts_inserted": 210240,
+    "ztf_alerts_insert_time_s": 33.85698699951172,
+    "cone_search_query_time_s": 0.08793497085571289
 }

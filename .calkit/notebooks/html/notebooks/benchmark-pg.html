@@ -7589,9 +7589,9 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>[+] Running 3/3
+<pre>[+] Running 2/3
  <span class="ansi-green-fg">✔</span> Network boom-benchmarking_default       <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
- <span class="ansi-green-fg">✔</span> Container boom-benchmarking-postgres-1  <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
+ <span class="ansi-yellow-fg">⠋</span> Container boom-benchmarking-postgres-1  Creating                        <span class="ansi-blue-fg">0.0s </span>
  <span class="ansi-green-fg">✔</span> Container boom-benchmarking-mongo-1     <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
 </pre>
 </div>
@@ -7599,19 +7599,13 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>[+] Running 2/3
+<pre>[+] Running 1/3
  <span class="ansi-green-fg">✔</span> Network boom-benchmarking_default       <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
- <span class="ansi-green-fg">✔</span> Container boom-benchmarking-postgres-1  <span class="ansi-green-fg">Started</span>                         <span class="ansi-blue-fg">0.1s </span>
+ <span class="ansi-yellow-fg">⠙</span> Container boom-benchmarking-postgres-1  Starting                        <span class="ansi-blue-fg">0.1s </span>
  <span class="ansi-yellow-fg">⠙</span> Container boom-benchmarking-mongo-1     Starting                        <span class="ansi-blue-fg">0.1s </span>
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre><span class="ansi-blue-fg">[+] Running 3/3</span>
+<span class="ansi-blue-fg">[+] Running 3/3</span>
  <span class="ansi-green-fg">✔</span> Network boom-benchmarking_default       <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
- <span class="ansi-green-fg">✔</span> Container boom-benchmarking-postgres-1  <span class="ansi-green-fg">Started</span>                         <span class="ansi-blue-fg">0.1s </span>
+ <span class="ansi-green-fg">✔</span> Container boom-benchmarking-postgres-1  <span class="ansi-green-fg">Started</span>                         <span class="ansi-blue-fg">0.2s </span>
  <span class="ansi-green-fg">✔</span> Container boom-benchmarking-mongo-1     <span class="ansi-green-fg">Started</span>                         <span class="ansi-blue-fg">0.2s </span>
 </pre>
 </div>
@@ -7884,6 +7878,17 @@ Data and pipelines are up to date.
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5f3a35ca">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Insert-ZTF-alerts">Insert ZTF alerts<a class="anchor-link" href="#Insert-ZTF-alerts">¶</a></h2>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6ffadc5d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7938,6 +7943,7 @@ Data and pipelines are up to date.
 
 <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
+<span class="n">results</span><span class="p">[</span><span class="s2">"n_ztf_alerts_inserted"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows_tuples</span><span class="p">)</span>
 <span class="n">results</span><span class="p">[</span><span class="s2">"ztf_alerts_insert_time_s"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
 </pre></div>
 </div>
@@ -8016,7 +8022,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Found 5 rows matching the query in 0.08918094635009766 seconds.</pre>
+<pre>Found 5 rows matching the query in 0.08793497085571289 seconds.</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8138,7 +8144,7 @@ Data and pipelines are up to date.
    'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
   180.0419699,
   0.9809825,
-  datetime.datetime(2025, 6, 18, 18, 6, 36, 831870)),
+  datetime.datetime(2025, 6, 18, 18, 20, 12, 572212)),
  (40071,
   0,
   'ZTF25aauzowy',
@@ -8248,7 +8254,7 @@ Data and pipelines are up to date.
    'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
   179.9920084,
   0.9127118,
-  datetime.datetime(2025, 6, 18, 18, 6, 36, 831870)),
+  datetime.datetime(2025, 6, 18, 18, 20, 12, 572212)),
  (44963,
   0,
   'ZTF25aauzoxj',
@@ -8358,7 +8364,7 @@ Data and pipelines are up to date.
    'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
   180.1735178,
   0.9698482,
-  datetime.datetime(2025, 6, 18, 18, 6, 36, 831870)),
+  datetime.datetime(2025, 6, 18, 18, 20, 12, 572212)),
  (138897,
   0,
   'ZTF25aauzoxa',
@@ -8468,7 +8474,7 @@ Data and pipelines are up to date.
    'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
   180.0618511,
   0.8653762,
-  datetime.datetime(2025, 6, 18, 18, 6, 36, 831870)),
+  datetime.datetime(2025, 6, 18, 18, 20, 12, 572212)),
  (204381,
   0,
   'ZTF25aauzoxd',
@@ -8578,7 +8584,7 @@ Data and pipelines are up to date.
    'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
   179.8537996,
   0.9105278,
-  datetime.datetime(2025, 6, 18, 18, 6, 36, 831870))]</pre>
+  datetime.datetime(2025, 6, 18, 18, 20, 12, 572212))]</pre>
 </div>
 </div>
 </div>
