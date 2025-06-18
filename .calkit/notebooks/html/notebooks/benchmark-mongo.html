@@ -7861,7 +7861,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'ztf_alerts_insert_time_s': 8.21698784828186}</pre>
+<pre>{'ztf_alerts_insert_time_s': 7.895184755325317}</pre>
 </div>
 </div>
 </div>
@@ -7934,11 +7934,9 @@ Data and pipelines are up to date.
     <span class="p">}</span>
 <span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 
-<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-<span class="n">results</span><span class="p">[</span><span class="s2">"cone_search_query_time_s"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
-
 <span class="n">res</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">results</span><span class="p">[</span><span class="s2">"cone_search_query_time_s"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
 <span class="n">res</span>
 </pre></div>
@@ -7966,7 +7964,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[{'_id': ObjectId('6852f6f5f4cbb4e2e388600e'),
+<pre>[{'_id': ObjectId('6853000f8446d8e25fc0fe6f'),
   'object_id': 'ZTF25aauzowy',
   'cand_id': 3086195000715015030,
   'candidate': {'jd': 2460840.695,
@@ -8073,7 +8071,7 @@ Data and pipelines are up to date.
    'drb': 0.9999996423721313,
    'drbversion': 'd6_m7'},
   'coordinates': {'type': 'Point', 'coordinates': [179.9920084, 0.9127118]}},
- {'_id': ObjectId('6852f6f6f4cbb4e2e38ae1e4'),
+ {'_id': ObjectId('6853000f8446d8e25fc38045'),
   'object_id': 'ZTF25aauzoxd',
   'cand_id': 3086195000715015024,
   'candidate': {'jd': 2460840.695,
@@ -8180,7 +8178,7 @@ Data and pipelines are up to date.
    'drb': 0.05830636993050575,
    'drbversion': 'd6_m7'},
   'coordinates': {'type': 'Point', 'coordinates': [179.8537996, 0.9105278]}},
- {'_id': ObjectId('6852f6f6f4cbb4e2e389e218'),
+ {'_id': ObjectId('6853000f8446d8e25fc28079'),
   'object_id': 'ZTF25aauzoxa',
   'cand_id': 3086195000715015022,
   'candidate': {'jd': 2460840.695,
@@ -8287,7 +8285,7 @@ Data and pipelines are up to date.
    'drb': 0.0013700099661946297,
    'drbversion': 'd6_m7'},
   'coordinates': {'type': 'Point', 'coordinates': [-179.9381489, 0.8653762]}},
- {'_id': ObjectId('6852f6f5f4cbb4e2e388732a'),
+ {'_id': ObjectId('6853000f8446d8e25fc1118b'),
   'object_id': 'ZTF25aauzoxj',
   'cand_id': 3086195000715015026,
   'candidate': {'jd': 2460840.695,
@@ -8394,7 +8392,7 @@ Data and pipelines are up to date.
    'drb': 0.9999635219573975,
    'drbversion': 'd6_m7'},
   'coordinates': {'type': 'Point', 'coordinates': [-179.8264822, 0.9698482]}},
- {'_id': ObjectId('6852f6f5f4cbb4e2e387e331'),
+ {'_id': ObjectId('6853000f8446d8e25fc08192'),
   'object_id': 'ZTF20aadxroc',
   'cand_id': 3086195000715015027,
   'candidate': {'jd': 2460840.695,
@@ -8698,32 +8696,20 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>[+] Running 1/2
+<pre>[+] Running 0/2
  </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>✔</pre>
+<pre>⠸</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre> Container boom-benchmarking-postgres-1  </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Removed</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>                         </pre>
+<pre> Container boom-benchmarking-postgres-1  Stopping                        </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8798,7 +8784,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.4s </pre>
+<pre>0.5s </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8817,7 +8803,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre> Container boom-benchmarking-mongo-1     Removing                        </pre>
+<pre> Container boom-benchmarking-mongo-1     Stopping                        </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8879,7 +8865,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.4s </pre>
+<pre>0.5s </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8916,7 +8902,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.5s </pre>
+<pre>0.6s </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8930,6 +8916,112 @@ Data and pipelines are up to date.
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>⠋</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Network boom-benchmarking_default       Removing                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.0s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 2/3
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.5s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.6s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠙</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8997,7 +9089,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.4s </pre>
+<pre>0.5s </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -9034,7 +9126,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.5s </pre>
+<pre>0.6s </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">

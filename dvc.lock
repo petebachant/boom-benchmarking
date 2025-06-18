@@ -115,13 +115,13 @@ stages:
     deps:
     - path: notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: 8540dab1ddbb9af67fc7a45bfbb677fa
-      size: 8066
+      md5: f697f86c3b3ff681abd81fae1966002d
+      size: 8046
     outs:
     - path: .calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: 7ba988ba34ee1d20260093d0a3e6fdb3
-      size: 7247
+      md5: f5c51d11307255e7368023f2e7b0d8ce
+      size: 7227
   benchmark-mongo:
     cmd: calkit nb execute --environment py --no-check --to html "notebooks/benchmark-mongo.ipynb"
     deps:
@@ -131,8 +131,8 @@ stages:
       size: 3692
     - path: .calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: 7ba988ba34ee1d20260093d0a3e6fdb3
-      size: 7247
+      md5: f5c51d11307255e7368023f2e7b0d8ce
+      size: 7227
     - path: docker-compose.yaml
       hash: md5
       md5: da705e5e38df81d6a1e696f861a30cf2
@@ -140,24 +140,24 @@ stages:
     outs:
     - path: .calkit/notebooks/executed/notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: d4c4db215bc9cc927a73b2682a1f98e3
-      size: 47009
+      md5: a3b70a4ddfef0119b9513d6ee0f9818e
+      size: 48784
     - path: results/mongo.json
       hash: md5
-      md5: 279203c61846e9016c9f003ae720fe5c
+      md5: a70cbf4620985f54992a1f150a5b3a36
       size: 108
   _clean-nb-benchmark-pg:
     cmd: calkit nb clean "notebooks/benchmark-pg.ipynb"
     deps:
     - path: notebooks/benchmark-pg.ipynb
       hash: md5
-      md5: f2c8a4b742d08e5d45b3dc1ec981a12c
-      size: 8215
+      md5: 452603c672d7bf29499ce32868a0d075
+      size: 34420
     outs:
     - path: .calkit/notebooks/cleaned/notebooks/benchmark-pg.ipynb
       hash: md5
-      md5: f2c8a4b742d08e5d45b3dc1ec981a12c
-      size: 8215
+      md5: ab4d6d093fad85742b3f92b52a8d1efa
+      size: 8632
   ztf-avro-to-pg-rows:
     cmd: calkit xenv -n py -- python ".calkit/notebook-stages/ztf-avro-to-pg-rows/script.py"
     deps:
@@ -184,8 +184,8 @@ stages:
       size: 3692
     - path: .calkit/notebooks/cleaned/notebooks/benchmark-pg.ipynb
       hash: md5
-      md5: f2c8a4b742d08e5d45b3dc1ec981a12c
-      size: 8215
+      md5: ab4d6d093fad85742b3f92b52a8d1efa
+      size: 8632
     - path: docker-compose.yaml
       hash: md5
       md5: da705e5e38df81d6a1e696f861a30cf2
@@ -197,12 +197,12 @@ stages:
     outs:
     - path: .calkit/notebooks/executed/notebooks/benchmark-pg.ipynb
       hash: md5
-      md5: 516403705b3042f4c539264916317f03
-      size: 14874
+      md5: 8b740cdb040b257d6037b5c504cf7383
+      size: 38532
     - path: results/postgres.json
       hash: md5
-      md5: 825c746ab68d119a24f389364dadaaea
-      size: 54
+      md5: ac13fe8f88efe9395ba6740d8581c716
+      size: 106
   ztf-avro-to-mongo-docs:
     cmd: calkit xenv -n py -- python ".calkit/notebook-stages/ztf-avro-to-mongo-docs/script.py"
     deps:
@@ -245,12 +245,12 @@ stages:
       size: 241
     - path: results/mongo.json
       hash: md5
-      md5: 279203c61846e9016c9f003ae720fe5c
+      md5: a70cbf4620985f54992a1f150a5b3a36
       size: 108
     - path: results/postgres.json
       hash: md5
-      md5: 825c746ab68d119a24f389364dadaaea
-      size: 54
+      md5: ac13fe8f88efe9395ba6740d8581c716
+      size: 106
     outs:
     - path: .calkit/notebooks/executed/notebooks/summarize.ipynb
       hash: md5
