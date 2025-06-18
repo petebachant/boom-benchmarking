@@ -203,3 +203,9 @@ data/*.gz
 data/ned/kowalski.NED.json
 
 data/kowalski.NED.json
+
+.calkit/notebooks/cleaned/notebooks/inspect-alert.ipynb
+
+.calkit/notebooks/executed/notebooks/inspect-alert.ipynb
+
+.DS_Store
