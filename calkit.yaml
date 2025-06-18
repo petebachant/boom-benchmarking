@@ -89,6 +89,11 @@ datasets:
     imported_from:
       url: https://ztf.uw.edu/alerts/public/ztf_public_20250614.tar.gz
 notebooks:
+  - path: notebooks/inspect-alert.ipynb
+    title: Inspect alert structure
+    description: >
+      This notebook shows the structure of the ZTF and NED alerts.
+    stage: inspect-alert
   - path: notebooks/benchmark-mongo.ipynb
     title: Benchmark MongoDB
     description: >
