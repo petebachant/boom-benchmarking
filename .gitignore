@@ -210,3 +210,5 @@ data/kowalski.NED.json
 
 .DS_Store
 *.pickle
+.tmp
+.venv*

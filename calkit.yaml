@@ -21,10 +21,10 @@ environments:
     path: envs/py.txt
     prefix: .venv
   duckdb:
-    path: requirements.txt
+    path: envs/duckdb.txt
     kind: uv-venv
     prefix: .venv-duckdb
-    python: 3.12.4
+    python: "3.12.4"
 pipeline:
   stages:
     get-ztf-data:
