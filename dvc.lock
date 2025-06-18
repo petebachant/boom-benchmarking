@@ -115,13 +115,13 @@ stages:
     deps:
     - path: notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: f85b781afe534f5a870a86f648564858
-      size: 7652
+      md5: 8540dab1ddbb9af67fc7a45bfbb677fa
+      size: 8066
     outs:
     - path: .calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: a5b451dc8f494cec41987f1688f78f18
-      size: 6833
+      md5: 7ba988ba34ee1d20260093d0a3e6fdb3
+      size: 7247
   benchmark-mongo:
     cmd: calkit nb execute --environment py --no-check --to html "notebooks/benchmark-mongo.ipynb"
     deps:
@@ -131,8 +131,8 @@ stages:
       size: 3692
     - path: .calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: a5b451dc8f494cec41987f1688f78f18
-      size: 6833
+      md5: 7ba988ba34ee1d20260093d0a3e6fdb3
+      size: 7247
     - path: docker-compose.yaml
       hash: md5
       md5: da705e5e38df81d6a1e696f861a30cf2
@@ -140,12 +140,12 @@ stages:
     outs:
     - path: .calkit/notebooks/executed/notebooks/benchmark-mongo.ipynb
       hash: md5
-      md5: ca72c459d857e76e9edb3586dd9a7770
-      size: 47274
+      md5: d4c4db215bc9cc927a73b2682a1f98e3
+      size: 47009
     - path: results/mongo.json
       hash: md5
-      md5: 74994af53709bc695e478be5745e0ad8
-      size: 53
+      md5: 279203c61846e9016c9f003ae720fe5c
+      size: 108
   _clean-nb-benchmark-pg:
     cmd: calkit nb clean "notebooks/benchmark-pg.ipynb"
     deps:
@@ -245,8 +245,8 @@ stages:
       size: 241
     - path: results/mongo.json
       hash: md5
-      md5: 74994af53709bc695e478be5745e0ad8
-      size: 53
+      md5: 279203c61846e9016c9f003ae720fe5c
+      size: 108
     - path: results/postgres.json
       hash: md5
       md5: 825c746ab68d119a24f389364dadaaea
