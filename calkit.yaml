@@ -70,7 +70,7 @@ pipeline:
         - docker-compose.yaml
         - envs/Dockerfile.pg-q3c
       outputs:
-        - path: results/pg.json
+        - path: results/postgres.json
           storage: git
     summarize:
       kind: jupyter-notebook
@@ -78,7 +78,7 @@ pipeline:
       environment: py
       inputs:
         - results/mongo.json
-        - results/pg.json
+        - results/postgres.json
       html_storage: git
       executed_ipynb_storage: git
 datasets:

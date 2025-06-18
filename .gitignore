@@ -209,3 +209,4 @@ data/kowalski.NED.json
 .calkit/notebooks/executed/notebooks/inspect-alert.ipynb
 
 .DS_Store
+*.pickle

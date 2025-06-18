@@ -5,3 +5,4 @@ fastavro
 tqdm
 jupyter
 ipywidgets
+calkit-python>=0.24.0

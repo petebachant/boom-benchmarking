@@ -97,7 +97,7 @@ stages:
     - envs/Dockerfile.pg-q3c
     - .calkit/env-locks/py.txt
     outs:
-    - results/pg.json:
+    - results/postgres.json:
         cache: false
         persist: false
     - .calkit/notebooks/executed/notebooks/benchmark-pg.ipynb:
@@ -119,19 +119,28 @@ stages:
     deps:
     - .calkit/notebooks/cleaned/notebooks/summarize.ipynb
     - results/mongo.json
-    - results/pg.json
+    - results/postgres.json
     - .calkit/env-locks/py.txt
     outs:
     - .calkit/notebooks/executed/notebooks/summarize.ipynb:
         cache: false
     desc: Automatically generated from the 'summarize' stage in calkit.yaml. 
       Changes made here will be overwritten.
-  avro-to-docs:
+  ztf-avro-to-pg-rows:
     cmd: calkit xenv -n py -- python 
-      ".calkit/notebook-stages/avro-to-docs/script.py"
+      ".calkit/notebook-stages/ztf-avro-to-pg-rows/script.py"
     deps:
-    - .calkit/notebook-stages/avro-to-docs/script.py
+    - .calkit/notebook-stages/ztf-avro-to-pg-rows/script.py
     - data/ztf_public_20250614
     outs:
-    - .calkit/notebook-stages/avro-to-docs/outs/documents.pickle:
+    - .calkit/notebook-stages/ztf-avro-to-pg-rows/outs/rows.pickle:
+        cache: false
+  ztf-avro-to-mongo-docs:
+    cmd: calkit xenv -n py -- python 
+      ".calkit/notebook-stages/ztf-avro-to-mongo-docs/script.py"
+    deps:
+    - .calkit/notebook-stages/ztf-avro-to-mongo-docs/script.py
+    - data/ztf_public_20250614
+    outs:
+    - .calkit/notebook-stages/ztf-avro-to-mongo-docs/outs/documents.pickle:
         cache: false
