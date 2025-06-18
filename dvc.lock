@@ -31,14 +31,65 @@ stages:
       md5: 39875806dc1306ca9778ee24cb2ec07e
       size: 4060622282
   _check-env-py:
-    cmd: calkit check venv envs/py.txt -o .calkit/env-locks/py.txt
+    cmd: calkit check environment --name py
     deps:
     - path: envs/py.txt
       hash: md5
-      md5: 73738d1dc41436417758399dc9866b07
-      size: 67
+      md5: 803d0c48365c2eeb2db0555c038c9e9e
+      size: 81
     outs:
     - path: .calkit/env-locks/py.txt
       hash: md5
-      md5: 48ccea7f21c69853ba6fc06eafc0caf9
-      size: 1950
+      md5: 0c4869283ce5e35c2b7639d033329e4f
+      size: 3692
+  create-stage:
+    cmd: dvc stage add -n new-stage -f --run --dep README.md echo sup
+    deps:
+    - path: README.md
+      hash: md5
+      md5: 69f9822ee55dddfce579e3f09a6dad17
+      size: 21
+  new-stage:
+    cmd: echo sup
+    deps:
+    - path: README.md
+      hash: md5
+      md5: 69f9822ee55dddfce579e3f09a6dad17
+      size: 21
+  _clean-nb-inspect-alert:
+    cmd: calkit nb clean "notebooks/inspect-alert.ipynb"
+    deps:
+    - path: notebooks/inspect-alert.ipynb
+      hash: md5
+      md5: 9063a45f1e9517655803d2e4401dc2df
+      size: 667199
+    outs:
+    - path: .calkit/notebooks/cleaned/notebooks/inspect-alert.ipynb
+      hash: md5
+      md5: e3c5db800a8fa84938cd19231f613bcb
+      size: 2107
+  inspect-alert:
+    cmd: calkit nb execute --environment py --no-check --to html "notebooks/inspect-alert.ipynb"
+    deps:
+    - path: .calkit/env-locks/py.txt
+      hash: md5
+      md5: 0c4869283ce5e35c2b7639d033329e4f
+      size: 3692
+    - path: .calkit/notebooks/cleaned/notebooks/inspect-alert.ipynb
+      hash: md5
+      md5: e3c5db800a8fa84938cd19231f613bcb
+      size: 2107
+    - path: data/kowalski.NED.json
+      hash: md5
+      md5: 39875806dc1306ca9778ee24cb2ec07e
+      size: 4060622282
+    - path: data/ztf_public_20250614
+      hash: md5
+      md5: 57a45a392cfcc5c148261ec8238cb639.dir
+      size: 15932892200
+      nfiles: 210240
+    outs:
+    - path: .calkit/notebooks/executed/notebooks/inspect-alert.ipynb
+      hash: md5
+      md5: 72f149bef27b70e3e9aee37fffba113d
+      size: 668394

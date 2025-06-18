@@ -1,6 +1,6 @@
 stages:
   _check-env-py:
-    cmd: calkit check venv envs/py.txt -o .calkit/env-locks/py.txt
+    cmd: calkit check environment --name py
     deps:
       - envs/py.txt
     outs:
@@ -31,4 +31,93 @@ stages:
           cache: false
           persist: false
     desc: Automatically generated from the 'extract-ned-data' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  _clean-nb-inspect-alert:
+    cmd: calkit nb clean "notebooks/inspect-alert.ipynb"
+    deps:
+      - notebooks/inspect-alert.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/inspect-alert.ipynb:
+          cache: false
+    desc: Automatically generated from the 'inspect-alert' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  inspect-alert:
+    cmd: calkit nb execute --environment py --no-check --to html "notebooks/inspect-alert.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/inspect-alert.ipynb
+      - data/kowalski.NED.json
+      - data/ztf_public_20250614
+      - .calkit/env-locks/py.txt
+    outs:
+      - .calkit/notebooks/executed/notebooks/inspect-alert.ipynb:
+          cache: false
+    desc: Automatically generated from the 'inspect-alert' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  _clean-nb-benchmark-mongo:
+    cmd: calkit nb clean "notebooks/benchmark-mongo.ipynb"
+    deps:
+      - notebooks/benchmark-mongo.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb:
+          cache: false
+    desc: Automatically generated from the 'benchmark-mongo' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  benchmark-mongo:
+    cmd: calkit nb execute --environment py --no-check --to html "notebooks/benchmark-mongo.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb
+      - docker-compose.yaml
+      - .calkit/env-locks/py.txt
+    outs:
+      - results/mongo.json:
+          cache: false
+          persist: false
+      - .calkit/notebooks/executed/notebooks/benchmark-mongo.ipynb:
+          cache: true
+    desc: Automatically generated from the 'benchmark-mongo' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  _clean-nb-benchmark-pg:
+    cmd: calkit nb clean "notebooks/benchmark-pg.ipynb"
+    deps:
+      - notebooks/benchmark-pg.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/benchmark-pg.ipynb:
+          cache: false
+    desc: Automatically generated from the 'benchmark-pg' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  benchmark-pg:
+    cmd: calkit nb execute --environment py --no-check --to html "notebooks/benchmark-pg.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/benchmark-pg.ipynb
+      - docker-compose.yaml
+      - envs/Dockerfile.pg-q3c
+      - .calkit/env-locks/py.txt
+    outs:
+      - results/pg.json:
+          cache: false
+          persist: false
+      - .calkit/notebooks/executed/notebooks/benchmark-pg.ipynb:
+          cache: true
+    desc: Automatically generated from the 'benchmark-pg' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  _clean-nb-summarize:
+    cmd: calkit nb clean "notebooks/summarize.ipynb"
+    deps:
+      - notebooks/summarize.ipynb
+    outs:
+      - .calkit/notebooks/cleaned/notebooks/summarize.ipynb:
+          cache: false
+    desc: Automatically generated from the 'summarize' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  summarize:
+    cmd: calkit nb execute --environment py --no-check --to html "notebooks/summarize.ipynb"
+    deps:
+      - .calkit/notebooks/cleaned/notebooks/summarize.ipynb
+      - results/mongo.json
+      - results/pg.json
+      - .calkit/env-locks/py.txt
+    outs:
+      - .calkit/notebooks/executed/notebooks/summarize.ipynb:
+          cache: false
+    desc: Automatically generated from the 'summarize' stage in calkit.yaml.
       Changes made here will be overwritten.
