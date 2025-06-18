@@ -105,7 +105,7 @@ notebooks:
       This notebook benchmarks the performance of PostgreSQL for inserting
       and querying alerts.
   - path: notebooks/summarize.ipynb
-    title: Summarize Results
+    title: Summarize results
     description: >
       This notebook summarizes the results of the MongoDB and PostgreSQL benchmarks.
       It compares the performance of both databases in terms of insertion speed,
