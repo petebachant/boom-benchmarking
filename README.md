@@ -9,3 +9,8 @@ To reproduce the results, execute:
 ```sh
 calkit run
 ```
+
+## Databases tested
+
+- MongoDB
+- PostgreSQL with the Q3C extension
