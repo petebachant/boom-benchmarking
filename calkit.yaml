@@ -20,6 +20,11 @@ environments:
     python: "3.12.4"
     path: envs/py.txt
     prefix: .venv
+  duckdb:
+    path: requirements.txt
+    kind: uv-venv
+    prefix: .venv-duckdb
+    python: 3.12.4
 pipeline:
   stages:
     get-ztf-data:
@@ -29,10 +34,10 @@ pipeline:
       outputs:
         - path: data/ztf_public_20250614.tar.gz
           delete_before_run: false
-          storage: null
+          storage:
         - path: data/ztf_public_20250614
           delete_before_run: true
-          storage: null
+          storage:
     extract-ned-data:
       kind: shell-command
       command: gunzip -k data/kowalski.NED.json.gz
@@ -42,7 +47,7 @@ pipeline:
       outputs:
         - path: data/kowalski.NED.json
           delete_before_run: true
-          storage: null
+          storage:
     inspect-alert:
       kind: jupyter-notebook
       notebook_path: notebooks/inspect-alert.ipynb
@@ -51,8 +56,8 @@ pipeline:
         - data/kowalski.NED.json
         - data/ztf_public_20250614
       html_storage: git
-      executed_ipynb_storage: null
-      cleaned_ipynb_storage: null
+      executed_ipynb_storage:
+      cleaned_ipynb_storage:
     benchmark-mongo:
       kind: jupyter-notebook
       notebook_path: notebooks/benchmark-mongo.ipynb
@@ -107,8 +112,10 @@ notebooks:
   - path: notebooks/summarize.ipynb
     title: Summarize results
     description: >
-      This notebook summarizes the results of the MongoDB and PostgreSQL benchmarks.
-      It compares the performance of both databases in terms of insertion speed,
+      This notebook summarizes the results of the MongoDB and PostgreSQL
+      benchmarks.
+      It compares the performance of both databases in terms of insertion
+      speed,
       query speed, and filtering capabilities.
 showcase:
   - notebook: notebooks/summarize.ipynb
