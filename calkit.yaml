@@ -6,8 +6,9 @@ git_repo_url: https://github.com/petebachant/boom-benchmarking
 questions:
   - Which configuration is faster to insert ~1 million alerts?
   - Which configuration is faster to query ~1 million alerts?
+  - Which configuration is faster to run a cross-match query?
   - Which configuration is faster to run a cone search?
-  - Which configuration is faster to run a set of filters?
+  - Which configuration is faster to run a set of filters on a single alert?
 dependencies:
   - tar
   - gunzip
