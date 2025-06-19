@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>benchmark-pg</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>benchmark-mongo</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7511,17 +7511,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f0229472">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4cb7256f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Benchmark-Postgres-with-Q3C-extension">Benchmark Postgres with Q3C extension<a class="anchor-link" href="#Benchmark-Postgres-with-Q3C-extension">¶</a></h1>
+<h1 id="Benchmarking-MongoDB">Benchmarking MongoDB<a class="anchor-link" href="#Benchmarking-MongoDB">¶</a></h1><p>In this notebook we run some benchmarks with MongoDB.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=67ea07af">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ffbce7bc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7529,7 +7529,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Move to the top of the repo</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Run from the top of the repo</span>
 <span class="o">%</span><span class="k">cd</span> ..
 </pre></div>
 </div>
@@ -7549,7 +7549,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fc6862dc">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c8f8f0b7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7563,7 +7563,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5161d39a">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a38b3bc6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7571,12 +7571,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># First make sure our services are running</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Ensure MongoDB is running</span>
 <span class="o">!</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
-<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Wait for services to start</span>
 </pre></div>
 </div>
 </div>
@@ -7589,15 +7585,36 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>[+] Running 2/2
- <span class="ansi-green-fg">✔</span> Container boom-benchmarking-mongo-1     <span class="ansi-green-fg">Running</span>                         <span class="ansi-blue-fg">0.0s </span>
- <span class="ansi-green-fg">✔</span> Container boom-benchmarking-postgres-1  <span class="ansi-green-fg">Running</span>                         <span class="ansi-blue-fg">0.0s </span>
+<pre>[+] Running 1/3
+ <span class="ansi-green-fg">✔</span> Network boom-benchmarking_default       <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
+ <span class="ansi-yellow-fg">⠋</span> Container boom-benchmarking-postgres-1  Creating                        <span class="ansi-blue-fg">0.0s </span>
+ <span class="ansi-yellow-fg">⠋</span> Container boom-benchmarking-mongo-1     Creating                        <span class="ansi-blue-fg">0.0s </span>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 1/3
+ <span class="ansi-green-fg">✔</span> Network boom-benchmarking_default       <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
+ <span class="ansi-yellow-fg">⠙</span> Container boom-benchmarking-postgres-1  Starting                        <span class="ansi-blue-fg">0.2s </span>
+ <span class="ansi-yellow-fg">⠙</span> Container boom-benchmarking-mongo-1     Starting                        <span class="ansi-blue-fg">0.1s </span>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre><span class="ansi-blue-fg">[+] Running 3/3</span>
+ <span class="ansi-green-fg">✔</span> Network boom-benchmarking_default       <span class="ansi-green-fg">Created</span>                         <span class="ansi-blue-fg">0.0s </span>
+ <span class="ansi-green-fg">✔</span> Container boom-benchmarking-postgres-1  <span class="ansi-green-fg">Started</span>                         <span class="ansi-blue-fg">0.2s </span>
+ <span class="ansi-green-fg">✔</span> Container boom-benchmarking-mongo-1     <span class="ansi-green-fg">Started</span>                         <span class="ansi-blue-fg">0.2s </span>
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=57502518">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=efc19715">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7605,41 +7622,17 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">psycopg2</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Ensure the database is empty</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pymongo</span>
 
-<span class="c1"># Now drop the database if it exists and create a table for our</span>
-<span class="c1"># alerts</span>
-<span class="n">sql_drop</span> <span class="o">=</span> <span class="s2">"DROP DATABASE IF EXISTS boom;"</span>
-<span class="n">sql_create</span> <span class="o">=</span> <span class="s2">"CREATE DATABASE boom;"</span>
-
-<span class="c1"># Connect to the PostgreSQL database and execute the SQL commands</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">"postgres"</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">"postgres"</span>
-<span class="p">)</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">autocommit</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Enable autocommit mode</span>
-<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_drop</span><span class="p">)</span>
-<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_create</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Database created successfully"</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">drop_database</span><span class="p">(</span><span class="s2">"boom"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Database created successfully
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ea09e21f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b07115b5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7647,108 +7640,21 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Check that q3c is installed</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span>
-    <span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span>
-    <span class="n">user</span><span class="o">=</span><span class="s2">"postgres"</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="s2">"postgres"</span><span class="p">,</span>
-    <span class="n">database</span><span class="o">=</span><span class="s2">"boom"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="c1"># Get the q3c version</span>
-<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">        CREATE EXTENSION IF NOT EXISTS q3c;</span>
-<span class="sd">        SELECT q3c_version()</span>
-<span class="sd">    """</span>
-<span class="p">)</span>
-<span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create collections and indexes</span>
+<span class="n">database</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_database</span><span class="p">(</span><span class="s2">"boom"</span><span class="p">)</span>
+<span class="n">ztf_collection</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s2">"ztf_alerts"</span><span class="p">)</span>
+<span class="n">ned_collection</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s2">"ned_alerts"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[('2.0.1',)]</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d385cb83">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=708d2568">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">psycopg2</span>
-
-<span class="c1"># Now drop the database if it exists and create a table for our</span>
-<span class="c1"># alerts</span>
-<span class="n">sql</span> <span class="o">=</span> <span class="s2">"""</span>
-<span class="s2">-- Enable the q3c extension for spatial indexing</span>
-<span class="s2">CREATE EXTENSION IF NOT EXISTS q3c;</span>
-
-<span class="s2">CREATE TABLE IF NOT EXISTS alert (</span>
-<span class="s2">    id SERIAL PRIMARY KEY,</span>
-<span class="s2">    survey_id INT NOT NULL,</span>
-<span class="s2">    object_id VARCHAR(255) NOT NULL,</span>
-<span class="s2">    cand_id VARCHAR(255) NOT NULL,</span>
-<span class="s2">    candidate JSONB NOT NULL,</span>
-<span class="s2">    ra DOUBLE PRECISION NOT NULL,</span>
-<span class="s2">    dec DOUBLE PRECISION NOT NULL,</span>
-<span class="s2">    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
-<span class="s2">);</span>
-
-<span class="s2">-- Create a Q3C index on the ra and dec columns for faster querying</span>
-<span class="s2">CREATE INDEX idx_objects_q3c ON alert (q3c_ang2ipix(ra, dec));</span>
-<span class="s2">"""</span>
-
-<span class="c1"># Connect to the PostgreSQL database and execute the SQL commands</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-    <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span>
-    <span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span>
-    <span class="n">user</span><span class="o">=</span><span class="s2">"postgres"</span><span class="p">,</span>
-    <span class="n">password</span><span class="o">=</span><span class="s2">"postgres"</span><span class="p">,</span>
-    <span class="n">database</span><span class="o">=</span><span class="s2">"boom"</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
-    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Table created successfully."</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Table created successfully.
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d7cc12f2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> calkit.magics
@@ -7757,46 +7663,60 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f6483669">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=72dc8899">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">stage</span> --name ztf-avro-to-pg-rows \
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">stage</span> --name ztf-avro-to-mongo-docs \
     --dep-path "data/ztf_public_20250614" \
     --environment py \
     --verbose \
     --out-storage none \
-    --out rows
+    --out documents
 
-# Insert all the ZTF alerts
+# Load ZTF alerts into the database
 import glob
 import fastavro
 from tqdm.auto import tqdm
+
+
+def ra_to_longitude(ra):
+    """Convert RA (0-360) to longitude (-180 to 180)."""
+    if ra &gt; 180:
+        return ra - 360
+    else:
+        return ra
+
 
 ztf_avro_fpaths = glob.glob("data/ztf_public_20250614/*.avro")
 
 print(f"Found {len(ztf_avro_fpaths)} ZTF alerts")
 
-print("Converting to rows for insertion into PostgreSQL")
-rows = []
+print("Converting to documents")
+documents = []
 for alert_avro_fpath in tqdm(ztf_avro_fpaths):
     with open(alert_avro_fpath, "rb") as f:
         reader = fastavro.reader(f)
         for alert in reader:
             alert_fmt = {
                 "object_id": alert["objectId"],
-                "survey_id": 0,
                 "cand_id": alert["candid"],
                 "candidate": alert["candidate"],
-                "ra": alert["candidate"]["ra"],
-                "dec": alert["candidate"]["dec"],
+                # Coordinates are a GeoJSON object
+                "coordinates": {
+                    "type": "Point",
+                    "coordinates": [
+                        ra_to_longitude(alert["candidate"]["ra"]),
+                        alert["candidate"]["dec"],
+                    ],
+                },
             }
-            rows.append(alert_fmt)
-# This line left blank so we don't try to print the line above
+            documents.append(alert_fmt)
+# This line intentionally left blank
 </pre></div>
 </div>
 </div>
@@ -7809,7 +7729,7 @@ for alert_avro_fpath in tqdm(ztf_avro_fpaths):
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Added stage 'ztf-avro-to-pg-rows' in 'dvc.yaml'
+<pre>Added stage 'ztf-avro-to-mongo-docs' in 'dvc.yaml'
 </pre>
 </div>
 </div>
@@ -7823,22 +7743,22 @@ for alert_avro_fpath in tqdm(ztf_avro_fpaths):
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Stage 'ztf-avro-to-pg-rows' didn't change, skipping
+<pre>Stage 'ztf-avro-to-mongo-docs' didn't change, skipping
 Data and pipelines are up to date.
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ff4a83d9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=52c057f5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7848,23 +7768,47 @@ Data and pipelines are up to date.
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>210240</pre>
 </div>
 </div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
-</pre>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2afa8ea0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create geospatial index on coordinates</span>
+<span class="c1"># ztf_collection.drop_index("coordinates_geospatial_index")</span>
+<span class="n">ztf_collection</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span>
+    <span class="p">[(</span><span class="s2">"coordinates"</span><span class="p">,</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">GEOSPHERE</span><span class="p">)],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"coordinates_geospatial_index"</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>'coordinates_geospatial_index'</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5f3a35ca">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4fad29b1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7874,7 +7818,7 @@ Data and pipelines are up to date.
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6ffadc5d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=982b20a5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7882,53 +7826,17 @@ Data and pipelines are up to date.
 <div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Convert rows in to tuples for insertion</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">psycopg2.extras</span><span class="w"> </span><span class="kn">import</span> <span class="n">Json</span>
-<span class="n">rows_tuples</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span>
-        <span class="n">row</span><span class="p">[</span><span class="s2">"survey_id"</span><span class="p">],</span>
-        <span class="n">row</span><span class="p">[</span><span class="s2">"object_id"</span><span class="p">],</span>
-        <span class="n">row</span><span class="p">[</span><span class="s2">"cand_id"</span><span class="p">],</span>
-        <span class="n">Json</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">"candidate"</span><span class="p">]),</span>
-        <span class="n">row</span><span class="p">[</span><span class="s2">"ra"</span><span class="p">],</span>
-        <span class="n">row</span><span class="p">[</span><span class="s2">"dec"</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span>
-<span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d28561b8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">psycopg2.extras</span><span class="w"> </span><span class="kn">import</span> <span class="n">execute_values</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Insert all the alerts into the database</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Inserting ZTF alerts into the database"</span><span class="p">)</span>
 
 <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-<span class="c1"># Insert all rows into the PostgreSQL database</span>
-<span class="n">insert_sql</span> <span class="o">=</span> <span class="s2">"""</span>
-<span class="s2">INSERT INTO alert (survey_id, object_id, cand_id, candidate, ra, dec)</span>
-<span class="s2">VALUES </span><span class="si">%s</span><span class="s2">;</span>
-<span class="s2">"""</span>
-
-<span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
-    <span class="n">execute_values</span><span class="p">(</span>
-        <span class="n">cursor</span><span class="p">,</span> <span class="n">insert_sql</span><span class="p">,</span> <span class="n">rows_tuples</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">1000</span>
-    <span class="p">)</span>  <span class="c1"># Use page_size for batch insertion</span>
-    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Inserted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rows_tuples</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows into the alert table."</span><span class="p">)</span>
+<span class="n">ztf_collection</span><span class="o">.</span><span class="n">insert_many</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
 
 <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-<span class="n">results</span><span class="p">[</span><span class="s2">"n_ztf_alerts_inserted"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows_tuples</span><span class="p">)</span>
+<span class="n">results</span><span class="p">[</span><span class="s2">"n_ztf_alerts_inserted"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
 <span class="n">results</span><span class="p">[</span><span class="s2">"ztf_alerts_insert_time_s"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
 </pre></div>
 </div>
@@ -7942,7 +7850,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Inserted 210240 rows into the alert table.</pre>
+<pre>Inserting ZTF alerts into the database</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -7954,8 +7862,62 @@ Data and pipelines are up to date.
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4312c19b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=07cbbe32">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">results</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>{'n_ztf_alerts_inserted': 210240, 'ztf_alerts_insert_time_s': 7.98235297203064}</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=23d8e339">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Load NED alerts into the database</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cce8302e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Run cross-matching</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=425f7a6d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7965,35 +7927,39 @@ Data and pipelines are up to date.
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=16c27c46">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=47541fe4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># See how long it will take to filter some alerts based on their RA and DEC</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 
 <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-<span class="n">sql</span> <span class="o">=</span> <span class="s2">"""</span>
-<span class="s2">    SELECT *</span>
-<span class="s2">    FROM alert</span>
-<span class="s2">    WHERE q3c_radial_query(ra, dec, 180.0, 0.0, 1.0)</span>
-<span class="s2">    LIMIT 20;</span>
-<span class="s2">"""</span>
+<span class="c1"># Run through some filters</span>
+<span class="n">ra_center</span> <span class="o">=</span> <span class="mf">180.0</span>
+<span class="n">dec_center</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">radius_arcmin</span> <span class="o">=</span> <span class="mf">60.0</span>
+<span class="n">radius_radians</span> <span class="o">=</span> <span class="n">radius_arcmin</span> <span class="o">*</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">60.0</span>
 
-<span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">ztf_collection</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"$geoWithin"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"$centerSphere"</span><span class="p">:</span> <span class="p">[[</span><span class="n">ra_center</span><span class="p">,</span> <span class="n">dec_center</span><span class="p">],</span> <span class="n">radius_radians</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
 <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="n">results</span><span class="p">[</span><span class="s2">"cone_search_query_time_s"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows matching the query in "</span>
-    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'cone_search_query_time_s'</span><span class="p">]</span><span class="si">}</span><span class="s2"> seconds."</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
 <span class="n">res</span>
 </pre></div>
 </div>
@@ -8007,7 +7973,7 @@ Data and pipelines are up to date.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Found 5 rows matching the query in 0.09787392616271973 seconds.</pre>
+<pre>5</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8018,568 +7984,1168 @@ Data and pipelines are up to date.
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[(8106,
-  0,
-  'ZTF20aadxroc',
-  '3086195000715015027',
-  {'jd': 2460840.695,
-   'ra': 180.0419699,
-   'rb': 0.8199999928474426,
-   'dec': 0.9809825,
-   'drb': 0.9984015822410583,
+<pre>[{'_id': ObjectId('68541a510c2b7fa31b167416'),
+  'object_id': 'ZTF25aauzowy',
+  'cand_id': 3086195000715015030,
+  'candidate': {'jd': 2460840.695,
    'fid': 1,
-   'nid': 3086,
    'pid': 3086195000715,
-   'sky': -0.33180859684944153,
-   'fwhm': 1.2489781379699707,
-   'nbad': 0,
-   'nneg': 3,
-   'ranr': 180.0418705,
-   'rcid': 7,
-   'rfid': 472120107,
-   'xpos': 1180.45458984375,
-   'ypos': 2514.96728515625,
-   'chinr': 1.1829999685287476,
-   'decnr': 0.9809701,
-   'elong': 1.1414566040039062,
-   'field': 472,
-   'magap': 19.664600372314453,
-   'magnr': 19.469999313354492,
-   'scorr': 7.08878183364868,
-   'tblid': 27,
-   'zpmed': 26.231000900268555,
-   'aimage': 0.8149999976158142,
-   'bimage': 0.7139999866485596,
-   'candid': 3086195000715015027,
-   'chipsf': 1.6420772075653076,
-   'clrmed': 0.6050000190734863,
-   'clrrms': 0.32464098930358887,
-   'distnr': 0.3561820983886719,
-   'dsdiff': -5.356757164001465,
-   'dsnrms': 6.182764053344727,
-   'magpsf': 20.0427188873291,
-   'sgmag1': 19.60409927368164,
-   'sgmag2': -999.0,
-   'sgmag3': -999.0,
-   'simag1': 18.898300170898438,
-   'simag2': 21.496999740600586,
-   'simag3': -999.0,
-   'srmag1': 19.343900680541992,
-   'srmag2': -999.0,
-   'srmag3': -999.0,
-   'ssnrms': 11.539521217346191,
-   'sumrat': 0.98200523853302,
-   'szmag1': 18.829299926757812,
-   'szmag2': 20.98539924621582,
-   'szmag3': -999.0,
-   'exptime': 30.0,
-   'magdiff': -0.37811800837516785,
-   'maggaia': 19.020004272460938,
-   'nmtchps': 2,
-   'sharpnr': -0.03200000151991844,
-   'ssmagnr': -999.0,
-   'tooflag': 0,
-   'classtar': 0.7720000147819519,
-   'clrcoeff': -0.069473996758461,
-   'clrcounc': 2.0915600543958135e-05,
-   'jdendref': 2458461.999109,
-   'magapbig': 19.729999542236328,
-   'magzpsci': 26.274717330932617,
-   'ncovhist': 2401,
-   'ndethist': 215,
-   'neargaia': 0.39950695633888245,
-   'nmatches': 408,
-   'seeratio': 2.0,
-   'sgscore1': 0.9935420155525208,
-   'sgscore2': 0.0,
-   'sgscore3': -999.0,
-   'sigmagap': 0.20509999990463257,
-   'sigmagnr': 0.03400000184774399,
-   'sigmapsf': 0.1790684312582016,
-   'ssdistnr': -999.0,
-   'ssnamenr': 'null',
-   'zpclrcov': -1.505999989603879e-05,
-   'aimagerat': 0.6525334715843201,
-   'bimagerat': 0.5716673731803894,
-   'distpsnr1': 0.4004487693309784,
-   'distpsnr2': 20.905359268188477,
-   'distpsnr3': -999.0,
-   'isdiffpos': 't',
-   'jdendhist': 2460840.695,
-   'programid': 1,
-   'programpi': 'Kulkarni',
-   'rbversion': 't17_f5_c3',
    'diffmaglim': 20.375707626342773,
-   'drbversion': 'd6_m7',
-   'jdstartref': 2458202.790625,
-   'magfromlim': 0.7111071348190308,
-   'mindtoedge': 565.5325927734375,
-   'nframesref': 15,
-   'jdstarthist': 2458854.0023958,
-   'magzpscirms': 0.03752399981021881,
-   'magzpsciunc': 1.3052699614490848e-05,
-   'objectidps1': 109171800418847638,
-   'objectidps2': 109171800371024035,
-   'objectidps3': -999,
-   'sigmagapbig': 0.2784999907016754,
-   'maggaiabright': -999.0,
-   'neargaiabright': -999.0,
-   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
-  180.0419699,
-  0.9809825,
-  datetime.datetime(2025, 6, 19, 14, 14, 49, 188719)),
- (40071,
-  0,
-  'ZTF25aauzowy',
-  '3086195000715015030',
-  {'jd': 2460840.695,
-   'ra': 179.9920084,
-   'rb': 0.8985714316368103,
-   'dec': 0.9127118,
-   'drb': 0.9999996423721313,
-   'fid': 1,
+   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits',
+   'programpi': 'Kulkarni',
+   'programid': 1,
+   'candid': 3086195000715015030,
+   'isdiffpos': 't',
+   'tblid': 30,
    'nid': 3086,
-   'pid': 3086195000715,
-   'sky': -0.462651789188385,
-   'fwhm': 2.5399999618530273,
-   'nbad': 0,
-   'nneg': 1,
-   'ranr': 179.989838,
    'rcid': 7,
-   'rfid': 472120107,
+   'field': 472,
    'xpos': 1357.6480712890625,
    'ypos': 2757.983154296875,
-   'chinr': 0.7229999899864197,
-   'decnr': 0.910724,
-   'elong': 1.0391061305999756,
-   'field': 472,
+   'ra': 179.9920084,
+   'dec': 0.9127118,
+   'magpsf': 18.06671714782715,
+   'sigmapsf': 0.054224949330091476,
+   'chipsf': 8.100078582763672,
    'magap': 17.94930076599121,
+   'sigmagap': 0.043699998408555984,
+   'distnr': 10.463354110717773,
    'magnr': 22.499000549316406,
-   'scorr': 36.0443878173828,
-   'tblid': 30,
-   'zpmed': 26.231000900268555,
+   'sigmagnr': 0.32600000500679016,
+   'chinr': 0.7229999899864197,
+   'sharpnr': -0.2549999952316284,
+   'sky': -0.462651789188385,
+   'magdiff': -0.11741799861192703,
+   'fwhm': 2.5399999618530273,
+   'classtar': 0.9829999804496765,
+   'mindtoedge': 322.5168151855469,
+   'magfromlim': 2.4264070987701416,
+   'seeratio': 0.9834473133087158,
    'aimage': 0.7440000176429749,
    'bimage': 0.7160000205039978,
-   'candid': 3086195000715015030,
-   'chipsf': 8.100078582763672,
-   'clrmed': 0.6050000190734863,
-   'clrrms': 0.32464098930358887,
-   'distnr': 10.463354110717773,
-   'dsdiff': -33.11619186401367,
-   'dsnrms': 45.93757247924805,
-   'magpsf': 18.06671714782715,
-   'sgmag1': -999.0,
-   'sgmag2': -999.0,
-   'sgmag3': 21.63789939880371,
-   'simag1': 21.7091007232666,
-   'simag2': 21.408700942993164,
-   'simag3': 21.358800888061523,
-   'srmag1': -999.0,
-   'srmag2': -999.0,
-   'srmag3': -999.0,
-   'ssnrms': 79.05376434326172,
-   'sumrat': 1.0,
-   'szmag1': -999.0,
-   'szmag2': 21.260900497436523,
-   'szmag3': 20.873899459838867,
-   'exptime': 30.0,
-   'magdiff': -0.11741799861192703,
-   'maggaia': 9.5362548828125,
-   'nmtchps': 5,
-   'sharpnr': -0.2549999952316284,
-   'ssmagnr': -999.0,
-   'tooflag': 0,
-   'classtar': 0.9829999804496765,
-   'clrcoeff': -0.069473996758461,
-   'clrcounc': 2.0915600543958135e-05,
-   'jdendref': 2458461.999109,
-   'magapbig': 17.900800704956055,
-   'magzpsci': 26.274717330932617,
-   'ncovhist': 1329,
-   'ndethist': 1,
-   'neargaia': 40.104217529296875,
-   'nmatches': 408,
-   'seeratio': 0.9834473133087158,
-   'sgscore1': 0.019625000655651093,
-   'sgscore2': 0.8190569877624512,
-   'sgscore3': 0.24351799488067627,
-   'sigmagap': 0.043699998408555984,
-   'sigmagnr': 0.32600000500679016,
-   'sigmapsf': 0.054224949330091476,
-   'ssdistnr': -999.0,
-   'ssnamenr': 'null',
-   'zpclrcov': -1.505999989603879e-05,
    'aimagerat': 0.29291337728500366,
    'bimagerat': 0.28188976645469666,
+   'elong': 1.0391061305999756,
+   'nneg': 1,
+   'nbad': 0,
+   'rb': 0.8985714316368103,
+   'ssdistnr': -999.0,
+   'ssmagnr': -999.0,
+   'ssnamenr': 'null',
+   'sumrat': 1.0,
+   'magapbig': 17.900800704956055,
+   'sigmagapbig': 0.052799999713897705,
+   'ranr': 179.989838,
+   'decnr': 0.910724,
+   'sgmag1': -999.0,
+   'srmag1': -999.0,
+   'simag1': 21.7091007232666,
+   'szmag1': -999.0,
+   'sgscore1': 0.019625000655651093,
    'distpsnr1': 11.314409255981445,
-   'distpsnr2': 15.15783977508545,
-   'distpsnr3': 20.957138061523438,
-   'isdiffpos': 't',
-   'jdendhist': 2460840.695,
-   'programid': 1,
-   'programpi': 'Kulkarni',
-   'rbversion': 't17_f5_c3',
-   'diffmaglim': 20.375707626342773,
-   'drbversion': 'd6_m7',
-   'jdstartref': 2458202.790625,
-   'magfromlim': 2.4264070987701416,
-   'mindtoedge': 322.5168151855469,
-   'nframesref': 15,
+   'ndethist': 1,
+   'ncovhist': 1329,
    'jdstarthist': 2460840.695,
-   'magzpscirms': 0.03752399981021881,
-   'magzpsciunc': 1.3052699614490848e-05,
+   'jdendhist': 2460840.695,
+   'scorr': 36.0443878173828,
+   'tooflag': 0,
    'objectidps1': 109091799944838035,
    'objectidps2': 109091799934851102,
+   'sgmag2': -999.0,
+   'srmag2': -999.0,
+   'simag2': 21.408700942993164,
+   'szmag2': 21.260900497436523,
+   'sgscore2': 0.8190569877624512,
+   'distpsnr2': 15.15783977508545,
    'objectidps3': 109081799951619938,
-   'sigmagapbig': 0.052799999713897705,
-   'maggaiabright': 9.5362548828125,
+   'sgmag3': 21.63789939880371,
+   'srmag3': -999.0,
+   'simag3': 21.358800888061523,
+   'szmag3': 20.873899459838867,
+   'sgscore3': 0.24351799488067627,
+   'distpsnr3': 20.957138061523438,
+   'nmtchps': 5,
+   'rfid': 472120107,
+   'jdstartref': 2458202.790625,
+   'jdendref': 2458461.999109,
+   'nframesref': 15,
+   'rbversion': 't17_f5_c3',
+   'dsnrms': 45.93757247924805,
+   'ssnrms': 79.05376434326172,
+   'dsdiff': -33.11619186401367,
+   'magzpsci': 26.274717330932617,
+   'magzpsciunc': 1.3052699614490848e-05,
+   'magzpscirms': 0.03752399981021881,
+   'nmatches': 408,
+   'clrcoeff': -0.069473996758461,
+   'clrcounc': 2.0915600543958135e-05,
+   'zpclrcov': -1.505999989603879e-05,
+   'zpmed': 26.231000900268555,
+   'clrmed': 0.6050000190734863,
+   'clrrms': 0.32464098930358887,
+   'neargaia': 40.104217529296875,
    'neargaiabright': 40.104217529296875,
-   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
-  179.9920084,
-  0.9127118,
-  datetime.datetime(2025, 6, 19, 14, 14, 49, 188719)),
- (44963,
-  0,
-  'ZTF25aauzoxj',
-  '3086195000715015026',
-  {'jd': 2460840.695,
-   'ra': 180.1735178,
-   'rb': 0.741428554058075,
-   'dec': 0.9698482,
-   'drb': 0.9999635219573975,
-   'fid': 1,
-   'nid': 3086,
-   'pid': 3086195000715,
-   'sky': -0.061949390918016434,
-   'fwhm': 2.5199999809265137,
-   'nbad': 0,
-   'nneg': 5,
-   'ranr': 180.1766545,
-   'rcid': 7,
-   'rfid': 472120107,
-   'xpos': 712.5607299804688,
-   'ypos': 2553.890869140625,
-   'chinr': 1.00600004196167,
-   'decnr': 0.9762587,
-   'elong': 1.085714340209961,
-   'field': 472,
-   'magap': 20.291900634765625,
-   'magnr': 22.33099937438965,
-   'scorr': 10.6054401397705,
-   'tblid': 26,
-   'zpmed': 26.231000900268555,
-   'aimage': 0.6460000276565552,
-   'bimage': 0.5950000286102295,
-   'candid': 3086195000715015026,
-   'chipsf': 1.4112650156021118,
-   'clrmed': 0.6050000190734863,
-   'clrrms': 0.32464098930358887,
-   'distnr': 25.373510360717773,
-   'dsdiff': -4.778458118438721,
-   'dsnrms': 7.424920558929443,
-   'magpsf': 20.07771873474121,
-   'sgmag1': -999.0,
-   'sgmag2': 21.675199508666992,
-   'sgmag3': 22.0314998626709,
-   'simag1': -999.0,
-   'simag2': 19.110599517822266,
-   'simag3': 21.090700149536133,
-   'srmag1': -999.0,
-   'srmag2': 20.486099243164062,
-   'srmag3': 21.385799407958984,
-   'ssnrms': 12.203378677368164,
-   'sumrat': 1.0,
-   'szmag1': 21.21929931640625,
-   'szmag2': 18.568099975585938,
-   'szmag3': 20.682100296020508,
+   'maggaia': 9.5362548828125,
+   'maggaiabright': 9.5362548828125,
    'exptime': 30.0,
-   'magdiff': 0.21418200433254242,
-   'maggaia': 19.825965881347656,
-   'nmtchps': 4,
-   'sharpnr': -0.414000004529953,
-   'ssmagnr': -999.0,
-   'tooflag': 0,
-   'classtar': 0.9929999709129333,
-   'clrcoeff': -0.069473996758461,
-   'clrcounc': 2.0915600543958135e-05,
-   'jdendref': 2458461.999109,
-   'magapbig': 19.974300384521484,
-   'magzpsci': 26.274717330932617,
-   'ncovhist': 2401,
-   'ndethist': 1,
-   'neargaia': 24.77414321899414,
-   'nmatches': 408,
-   'seeratio': 0.9912524819374084,
-   'sgscore1': 0.02008330076932907,
-   'sgscore2': 0.9987499713897705,
-   'sgscore3': 0.011250000447034836,
-   'sigmagap': 0.3621000051498413,
-   'sigmagnr': 0.3190000057220459,
-   'sigmapsf': 0.17612598836421967,
-   'ssdistnr': -999.0,
-   'ssnamenr': 'null',
-   'zpclrcov': -1.505999989603879e-05,
-   'aimagerat': 0.25634920597076416,
-   'bimagerat': 0.2361111044883728,
-   'distpsnr1': 16.820537567138672,
-   'distpsnr2': 24.775829315185547,
-   'distpsnr3': 24.988876342773438,
-   'isdiffpos': 't',
-   'jdendhist': 2460840.695,
-   'programid': 1,
-   'programpi': 'Kulkarni',
-   'rbversion': 't17_f5_c3',
-   'diffmaglim': 20.375707626342773,
-   'drbversion': 'd6_m7',
-   'jdstartref': 2458202.790625,
-   'magfromlim': 0.08380711078643799,
-   'mindtoedge': 526.6091918945312,
-   'nframesref': 15,
-   'jdstarthist': 2460840.695,
-   'magzpscirms': 0.03752399981021881,
-   'magzpsciunc': 1.3052699614490848e-05,
-   'objectidps1': 109161801695531768,
-   'objectidps2': 109161801671131734,
-   'objectidps3': 109171801760822027,
-   'sigmagapbig': 0.34700000286102295,
-   'maggaiabright': -999.0,
-   'neargaiabright': -999.0,
-   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
-  180.1735178,
-  0.9698482,
-  datetime.datetime(2025, 6, 19, 14, 14, 49, 188719)),
- (138897,
-  0,
-  'ZTF25aauzoxa',
-  '3086195000715015022',
-  {'jd': 2460840.695,
-   'ra': 180.0618511,
-   'rb': 0.21142856776714325,
-   'dec': 0.8653762,
-   'drb': 0.0013700099661946297,
+   'drb': 0.9999996423721313,
+   'drbversion': 'd6_m7'},
+  'coordinates': {'type': 'Point', 'coordinates': [179.9920084, 0.9127118]}},
+ {'_id': ObjectId('68541a520c2b7fa31b18f5ec'),
+  'object_id': 'ZTF25aauzoxd',
+  'cand_id': 3086195000715015024,
+  'candidate': {'jd': 2460840.695,
    'fid': 1,
-   'nid': 3086,
    'pid': 3086195000715,
-   'sky': 0.5403904914855957,
-   'fwhm': 1.2489781379699707,
-   'nbad': 0,
-   'nneg': 10,
-   'ranr': 180.0609925,
+   'diffmaglim': 20.375707626342773,
+   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits',
+   'programpi': 'Kulkarni',
+   'programid': 1,
+   'candid': 3086195000715015024,
+   'isdiffpos': 't',
+   'tblid': 24,
+   'nid': 3086,
    'rcid': 7,
-   'rfid': 472120107,
-   'xpos': 1108.9669189453125,
-   'ypos': 2925.98486328125,
-   'chinr': 1.0520000457763672,
-   'decnr': 0.8646269,
-   'elong': 1.10597825050354,
    'field': 472,
-   'magap': 18.934900283813477,
-   'magnr': 22.37700080871582,
-   'scorr': 17.6423015594482,
-   'tblid': 22,
-   'zpmed': 26.231000900268555,
-   'aimage': 0.40700000524520874,
-   'bimage': 0.36800000071525574,
-   'candid': 3086195000715015022,
-   'chipsf': 24.675233840942383,
-   'clrmed': 0.6050000190734863,
-   'clrrms': 0.32464098930358887,
-   'distnr': 4.051957130432129,
-   'dsdiff': 9.089179992675781,
-   'dsnrms': 75.56819915771484,
-   'magpsf': 18.57571792602539,
-   'sgmag1': 20.945100784301758,
-   'sgmag2': 21.486000061035156,
-   'sgmag3': -999.0,
-   'simag1': 19.707500457763672,
-   'simag2': 19.892099380493164,
-   'simag3': 21.50079917907715,
-   'srmag1': 20.027700424194336,
-   'srmag2': 20.335800170898438,
-   'srmag3': 21.886499404907227,
-   'ssnrms': 66.47901916503906,
-   'sumrat': 0.6554825305938721,
-   'szmag1': 19.47279930114746,
-   'szmag2': 19.680599212646484,
-   'szmag3': 21.232999801635742,
-   'exptime': 30.0,
-   'magdiff': 0.3591820001602173,
-   'maggaia': 20.724512100219727,
-   'nmtchps': 4,
-   'sharpnr': -0.5220000147819519,
-   'ssmagnr': -999.0,
-   'tooflag': 0,
-   'classtar': 0.9990000128746033,
-   'clrcoeff': -0.069473996758461,
-   'clrcounc': 2.0915600543958135e-05,
-   'jdendref': 2458461.999109,
-   'magapbig': 19.03190040588379,
-   'magzpsci': 26.274717330932617,
-   'ncovhist': 2399,
-   'ndethist': 1,
-   'neargaia': 36.455406188964844,
-   'nmatches': 408,
-   'seeratio': 2.0,
-   'sgscore1': 0.0,
-   'sgscore2': 0.0012499999720603228,
-   'sgscore3': 0.009833330288529396,
-   'sigmagap': 0.10530000180006027,
-   'sigmagnr': 0.34299999475479126,
-   'sigmapsf': 0.20386898517608643,
-   'ssdistnr': -999.0,
-   'ssnamenr': 'null',
-   'zpclrcov': -1.505999989603879e-05,
-   'aimagerat': 0.3258664011955261,
-   'bimagerat': 0.2946408689022064,
-   'distpsnr1': 12.91142749786377,
-   'distpsnr2': 25.891786575317383,
-   'distpsnr3': 26.105701446533203,
-   'isdiffpos': 't',
-   'jdendhist': 2460840.695,
-   'programid': 1,
-   'programpi': 'Kulkarni',
-   'rbversion': 't17_f5_c3',
-   'diffmaglim': 20.375707626342773,
-   'drbversion': 'd6_m7',
-   'jdstartref': 2458202.790625,
-   'magfromlim': 1.4408071041107178,
-   'mindtoedge': 154.51510620117188,
-   'nframesref': 15,
-   'jdstarthist': 2460840.695,
-   'magzpscirms': 0.03752399981021881,
-   'magzpsciunc': 1.3052699614490848e-05,
-   'objectidps1': 109031800586617034,
-   'objectidps2': 109041800622947555,
-   'objectidps3': 109031800547698859,
-   'sigmagapbig': 0.14669999480247498,
-   'maggaiabright': -999.0,
-   'neargaiabright': -999.0,
-   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
-  180.0618511,
-  0.8653762,
-  datetime.datetime(2025, 6, 19, 14, 14, 49, 188719)),
- (204381,
-  0,
-  'ZTF25aauzoxd',
-  '3086195000715015024',
-  {'jd': 2460840.695,
-   'ra': 179.8537996,
-   'rb': 0.2557142972946167,
-   'dec': 0.9105278,
-   'drb': 0.05830636993050575,
-   'fid': 1,
-   'nid': 3086,
-   'pid': 3086195000715,
-   'sky': 0.14707930386066437,
-   'fwhm': 1.2489781379699707,
-   'nbad': 0,
-   'nneg': 7,
-   'ranr': 179.8523574,
-   'rcid': 7,
-   'rfid': 472120107,
    'xpos': 1849.0447998046875,
    'ypos': 2766.456787109375,
-   'chinr': 1.690999984741211,
-   'decnr': 0.9129787,
-   'elong': 1.3239130973815918,
-   'field': 472,
+   'ra': 179.8537996,
+   'dec': 0.9105278,
+   'magpsf': 19.65471839904785,
+   'sigmapsf': 0.19588236510753632,
+   'chipsf': 4.1340227127075195,
    'magap': 19.390899658203125,
+   'sigmagap': 0.15919999778270721,
+   'distnr': 10.11327075958252,
    'magnr': 22.104000091552734,
-   'scorr': 12.9692621231079,
-   'tblid': 24,
-   'zpmed': 26.231000900268555,
+   'sigmagnr': 0.3490000069141388,
+   'chinr': 1.690999984741211,
+   'sharpnr': 0.18400000035762787,
+   'sky': 0.14707930386066437,
+   'magdiff': -0.26381799578666687,
+   'fwhm': 1.2489781379699707,
+   'classtar': 0.996999979019165,
+   'mindtoedge': 314.043212890625,
+   'magfromlim': 0.9848071336746216,
+   'seeratio': 2.0,
    'aimage': 0.609000027179718,
    'bimage': 0.46000000834465027,
-   'candid': 3086195000715015024,
-   'chipsf': 4.1340227127075195,
-   'clrmed': 0.6050000190734863,
-   'clrrms': 0.32464098930358887,
-   'distnr': 10.11327075958252,
-   'dsdiff': -5.899974822998047,
-   'dsnrms': 12.99001693725586,
-   'magpsf': 19.65471839904785,
-   'sgmag1': -999.0,
-   'sgmag2': 21.32080078125,
-   'sgmag3': -999.0,
-   'simag1': 21.357999801635742,
-   'simag2': 20.392799377441406,
-   'simag3': 21.20240020751953,
-   'srmag1': 21.864599227905273,
-   'srmag2': 20.79330062866211,
-   'srmag3': 21.96739959716797,
-   'ssnrms': 18.889991760253906,
-   'sumrat': 0.9345725774765015,
-   'szmag1': 21.03849983215332,
-   'szmag2': 20.27050018310547,
-   'szmag3': 21.366899490356445,
-   'exptime': 30.0,
-   'magdiff': -0.26381799578666687,
-   'maggaia': 19.15252685546875,
-   'nmtchps': 11,
-   'sharpnr': 0.18400000035762787,
-   'ssmagnr': -999.0,
-   'tooflag': 0,
-   'classtar': 0.996999979019165,
-   'clrcoeff': -0.069473996758461,
-   'clrcounc': 2.0915600543958135e-05,
-   'jdendref': 2458461.999109,
-   'magapbig': 19.362199783325195,
-   'magzpsci': 26.274717330932617,
-   'ncovhist': 2373,
-   'ndethist': 1,
-   'neargaia': 28.15752601623535,
-   'nmatches': 408,
-   'seeratio': 2.0,
-   'sgscore1': 0.021666700020432472,
-   'sgscore2': 0.020625000819563866,
-   'sgscore3': 0.002749999985098839,
-   'sigmagap': 0.15919999778270721,
-   'sigmagnr': 0.3490000069141388,
-   'sigmapsf': 0.19588236510753632,
-   'ssdistnr': -999.0,
-   'ssnamenr': 'null',
-   'zpclrcov': -1.505999989603879e-05,
    'aimagerat': 0.48759862780570984,
    'bimagerat': 0.3683010935783386,
+   'elong': 1.3239130973815918,
+   'nneg': 7,
+   'nbad': 0,
+   'rb': 0.2557142972946167,
+   'ssdistnr': -999.0,
+   'ssmagnr': -999.0,
+   'ssnamenr': 'null',
+   'sumrat': 0.9345725774765015,
+   'magapbig': 19.362199783325195,
+   'sigmagapbig': 0.19840000569820404,
+   'ranr': 179.8523574,
+   'decnr': 0.9129787,
+   'sgmag1': -999.0,
+   'srmag1': 21.864599227905273,
+   'simag1': 21.357999801635742,
+   'szmag1': 21.03849983215332,
+   'sgscore1': 0.021666700020432472,
    'distpsnr1': 10.702638626098633,
-   'distpsnr2': 11.072458267211914,
-   'distpsnr3': 13.544403076171875,
-   'isdiffpos': 't',
-   'jdendhist': 2460840.695,
-   'programid': 1,
-   'programpi': 'Kulkarni',
-   'rbversion': 't17_f5_c3',
-   'diffmaglim': 20.375707626342773,
-   'drbversion': 'd6_m7',
-   'jdstartref': 2458202.790625,
-   'magfromlim': 0.9848071336746216,
-   'mindtoedge': 314.043212890625,
-   'nframesref': 15,
+   'ndethist': 1,
+   'ncovhist': 2373,
    'jdstarthist': 2460840.695,
-   'magzpscirms': 0.03752399981021881,
-   'magzpsciunc': 1.3052699614490848e-05,
+   'jdendhist': 2460840.695,
+   'scorr': 12.9692621231079,
+   'tooflag': 0,
    'objectidps1': 109091798521886032,
    'objectidps2': 109091798558390264,
+   'sgmag2': 21.32080078125,
+   'srmag2': 20.79330062866211,
+   'simag2': 20.392799377441406,
+   'szmag2': 20.27050018310547,
+   'sgscore2': 0.020625000819563866,
+   'distpsnr2': 11.072458267211914,
    'objectidps3': 109081798546408577,
-   'sigmagapbig': 0.19840000569820404,
-   'maggaiabright': 11.268800735473633,
+   'sgmag3': -999.0,
+   'srmag3': 21.96739959716797,
+   'simag3': 21.20240020751953,
+   'szmag3': 21.366899490356445,
+   'sgscore3': 0.002749999985098839,
+   'distpsnr3': 13.544403076171875,
+   'nmtchps': 11,
+   'rfid': 472120107,
+   'jdstartref': 2458202.790625,
+   'jdendref': 2458461.999109,
+   'nframesref': 15,
+   'rbversion': 't17_f5_c3',
+   'dsnrms': 12.99001693725586,
+   'ssnrms': 18.889991760253906,
+   'dsdiff': -5.899974822998047,
+   'magzpsci': 26.274717330932617,
+   'magzpsciunc': 1.3052699614490848e-05,
+   'magzpscirms': 0.03752399981021881,
+   'nmatches': 408,
+   'clrcoeff': -0.069473996758461,
+   'clrcounc': 2.0915600543958135e-05,
+   'zpclrcov': -1.505999989603879e-05,
+   'zpmed': 26.231000900268555,
+   'clrmed': 0.6050000190734863,
+   'clrrms': 0.32464098930358887,
+   'neargaia': 28.15752601623535,
    'neargaiabright': 63.03047561645508,
-   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits'},
-  179.8537996,
-  0.9105278,
-  datetime.datetime(2025, 6, 19, 14, 14, 49, 188719))]</pre>
+   'maggaia': 19.15252685546875,
+   'maggaiabright': 11.268800735473633,
+   'exptime': 30.0,
+   'drb': 0.05830636993050575,
+   'drbversion': 'd6_m7'},
+  'coordinates': {'type': 'Point', 'coordinates': [179.8537996, 0.9105278]}},
+ {'_id': ObjectId('68541a520c2b7fa31b17f620'),
+  'object_id': 'ZTF25aauzoxa',
+  'cand_id': 3086195000715015022,
+  'candidate': {'jd': 2460840.695,
+   'fid': 1,
+   'pid': 3086195000715,
+   'diffmaglim': 20.375707626342773,
+   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits',
+   'programpi': 'Kulkarni',
+   'programid': 1,
+   'candid': 3086195000715015022,
+   'isdiffpos': 't',
+   'tblid': 22,
+   'nid': 3086,
+   'rcid': 7,
+   'field': 472,
+   'xpos': 1108.9669189453125,
+   'ypos': 2925.98486328125,
+   'ra': 180.0618511,
+   'dec': 0.8653762,
+   'magpsf': 18.57571792602539,
+   'sigmapsf': 0.20386898517608643,
+   'chipsf': 24.675233840942383,
+   'magap': 18.934900283813477,
+   'sigmagap': 0.10530000180006027,
+   'distnr': 4.051957130432129,
+   'magnr': 22.37700080871582,
+   'sigmagnr': 0.34299999475479126,
+   'chinr': 1.0520000457763672,
+   'sharpnr': -0.5220000147819519,
+   'sky': 0.5403904914855957,
+   'magdiff': 0.3591820001602173,
+   'fwhm': 1.2489781379699707,
+   'classtar': 0.9990000128746033,
+   'mindtoedge': 154.51510620117188,
+   'magfromlim': 1.4408071041107178,
+   'seeratio': 2.0,
+   'aimage': 0.40700000524520874,
+   'bimage': 0.36800000071525574,
+   'aimagerat': 0.3258664011955261,
+   'bimagerat': 0.2946408689022064,
+   'elong': 1.10597825050354,
+   'nneg': 10,
+   'nbad': 0,
+   'rb': 0.21142856776714325,
+   'ssdistnr': -999.0,
+   'ssmagnr': -999.0,
+   'ssnamenr': 'null',
+   'sumrat': 0.6554825305938721,
+   'magapbig': 19.03190040588379,
+   'sigmagapbig': 0.14669999480247498,
+   'ranr': 180.0609925,
+   'decnr': 0.8646269,
+   'sgmag1': 20.945100784301758,
+   'srmag1': 20.027700424194336,
+   'simag1': 19.707500457763672,
+   'szmag1': 19.47279930114746,
+   'sgscore1': 0.0,
+   'distpsnr1': 12.91142749786377,
+   'ndethist': 1,
+   'ncovhist': 2399,
+   'jdstarthist': 2460840.695,
+   'jdendhist': 2460840.695,
+   'scorr': 17.6423015594482,
+   'tooflag': 0,
+   'objectidps1': 109031800586617034,
+   'objectidps2': 109041800622947555,
+   'sgmag2': 21.486000061035156,
+   'srmag2': 20.335800170898438,
+   'simag2': 19.892099380493164,
+   'szmag2': 19.680599212646484,
+   'sgscore2': 0.0012499999720603228,
+   'distpsnr2': 25.891786575317383,
+   'objectidps3': 109031800547698859,
+   'sgmag3': -999.0,
+   'srmag3': 21.886499404907227,
+   'simag3': 21.50079917907715,
+   'szmag3': 21.232999801635742,
+   'sgscore3': 0.009833330288529396,
+   'distpsnr3': 26.105701446533203,
+   'nmtchps': 4,
+   'rfid': 472120107,
+   'jdstartref': 2458202.790625,
+   'jdendref': 2458461.999109,
+   'nframesref': 15,
+   'rbversion': 't17_f5_c3',
+   'dsnrms': 75.56819915771484,
+   'ssnrms': 66.47901916503906,
+   'dsdiff': 9.089179992675781,
+   'magzpsci': 26.274717330932617,
+   'magzpsciunc': 1.3052699614490848e-05,
+   'magzpscirms': 0.03752399981021881,
+   'nmatches': 408,
+   'clrcoeff': -0.069473996758461,
+   'clrcounc': 2.0915600543958135e-05,
+   'zpclrcov': -1.505999989603879e-05,
+   'zpmed': 26.231000900268555,
+   'clrmed': 0.6050000190734863,
+   'clrrms': 0.32464098930358887,
+   'neargaia': 36.455406188964844,
+   'neargaiabright': -999.0,
+   'maggaia': 20.724512100219727,
+   'maggaiabright': -999.0,
+   'exptime': 30.0,
+   'drb': 0.0013700099661946297,
+   'drbversion': 'd6_m7'},
+  'coordinates': {'type': 'Point', 'coordinates': [-179.9381489, 0.8653762]}},
+ {'_id': ObjectId('68541a510c2b7fa31b168732'),
+  'object_id': 'ZTF25aauzoxj',
+  'cand_id': 3086195000715015026,
+  'candidate': {'jd': 2460840.695,
+   'fid': 1,
+   'pid': 3086195000715,
+   'diffmaglim': 20.375707626342773,
+   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits',
+   'programpi': 'Kulkarni',
+   'programid': 1,
+   'candid': 3086195000715015026,
+   'isdiffpos': 't',
+   'tblid': 26,
+   'nid': 3086,
+   'rcid': 7,
+   'field': 472,
+   'xpos': 712.5607299804688,
+   'ypos': 2553.890869140625,
+   'ra': 180.1735178,
+   'dec': 0.9698482,
+   'magpsf': 20.07771873474121,
+   'sigmapsf': 0.17612598836421967,
+   'chipsf': 1.4112650156021118,
+   'magap': 20.291900634765625,
+   'sigmagap': 0.3621000051498413,
+   'distnr': 25.373510360717773,
+   'magnr': 22.33099937438965,
+   'sigmagnr': 0.3190000057220459,
+   'chinr': 1.00600004196167,
+   'sharpnr': -0.414000004529953,
+   'sky': -0.061949390918016434,
+   'magdiff': 0.21418200433254242,
+   'fwhm': 2.5199999809265137,
+   'classtar': 0.9929999709129333,
+   'mindtoedge': 526.6091918945312,
+   'magfromlim': 0.08380711078643799,
+   'seeratio': 0.9912524819374084,
+   'aimage': 0.6460000276565552,
+   'bimage': 0.5950000286102295,
+   'aimagerat': 0.25634920597076416,
+   'bimagerat': 0.2361111044883728,
+   'elong': 1.085714340209961,
+   'nneg': 5,
+   'nbad': 0,
+   'rb': 0.741428554058075,
+   'ssdistnr': -999.0,
+   'ssmagnr': -999.0,
+   'ssnamenr': 'null',
+   'sumrat': 1.0,
+   'magapbig': 19.974300384521484,
+   'sigmagapbig': 0.34700000286102295,
+   'ranr': 180.1766545,
+   'decnr': 0.9762587,
+   'sgmag1': -999.0,
+   'srmag1': -999.0,
+   'simag1': -999.0,
+   'szmag1': 21.21929931640625,
+   'sgscore1': 0.02008330076932907,
+   'distpsnr1': 16.820537567138672,
+   'ndethist': 1,
+   'ncovhist': 2401,
+   'jdstarthist': 2460840.695,
+   'jdendhist': 2460840.695,
+   'scorr': 10.6054401397705,
+   'tooflag': 0,
+   'objectidps1': 109161801695531768,
+   'objectidps2': 109161801671131734,
+   'sgmag2': 21.675199508666992,
+   'srmag2': 20.486099243164062,
+   'simag2': 19.110599517822266,
+   'szmag2': 18.568099975585938,
+   'sgscore2': 0.9987499713897705,
+   'distpsnr2': 24.775829315185547,
+   'objectidps3': 109171801760822027,
+   'sgmag3': 22.0314998626709,
+   'srmag3': 21.385799407958984,
+   'simag3': 21.090700149536133,
+   'szmag3': 20.682100296020508,
+   'sgscore3': 0.011250000447034836,
+   'distpsnr3': 24.988876342773438,
+   'nmtchps': 4,
+   'rfid': 472120107,
+   'jdstartref': 2458202.790625,
+   'jdendref': 2458461.999109,
+   'nframesref': 15,
+   'rbversion': 't17_f5_c3',
+   'dsnrms': 7.424920558929443,
+   'ssnrms': 12.203378677368164,
+   'dsdiff': -4.778458118438721,
+   'magzpsci': 26.274717330932617,
+   'magzpsciunc': 1.3052699614490848e-05,
+   'magzpscirms': 0.03752399981021881,
+   'nmatches': 408,
+   'clrcoeff': -0.069473996758461,
+   'clrcounc': 2.0915600543958135e-05,
+   'zpclrcov': -1.505999989603879e-05,
+   'zpmed': 26.231000900268555,
+   'clrmed': 0.6050000190734863,
+   'clrrms': 0.32464098930358887,
+   'neargaia': 24.77414321899414,
+   'neargaiabright': -999.0,
+   'maggaia': 19.825965881347656,
+   'maggaiabright': -999.0,
+   'exptime': 30.0,
+   'drb': 0.9999635219573975,
+   'drbversion': 'd6_m7'},
+  'coordinates': {'type': 'Point', 'coordinates': [-179.8264822, 0.9698482]}},
+ {'_id': ObjectId('68541a510c2b7fa31b15f739'),
+  'object_id': 'ZTF20aadxroc',
+  'cand_id': 3086195000715015027,
+  'candidate': {'jd': 2460840.695,
+   'fid': 1,
+   'pid': 3086195000715,
+   'diffmaglim': 20.375707626342773,
+   'pdiffimfilename': 'ztf_20250614195000_000472_zg_c02_o_q4_scimrefdiffimg.fits',
+   'programpi': 'Kulkarni',
+   'programid': 1,
+   'candid': 3086195000715015027,
+   'isdiffpos': 't',
+   'tblid': 27,
+   'nid': 3086,
+   'rcid': 7,
+   'field': 472,
+   'xpos': 1180.45458984375,
+   'ypos': 2514.96728515625,
+   'ra': 180.0419699,
+   'dec': 0.9809825,
+   'magpsf': 20.0427188873291,
+   'sigmapsf': 0.1790684312582016,
+   'chipsf': 1.6420772075653076,
+   'magap': 19.664600372314453,
+   'sigmagap': 0.20509999990463257,
+   'distnr': 0.3561820983886719,
+   'magnr': 19.469999313354492,
+   'sigmagnr': 0.03400000184774399,
+   'chinr': 1.1829999685287476,
+   'sharpnr': -0.03200000151991844,
+   'sky': -0.33180859684944153,
+   'magdiff': -0.37811800837516785,
+   'fwhm': 1.2489781379699707,
+   'classtar': 0.7720000147819519,
+   'mindtoedge': 565.5325927734375,
+   'magfromlim': 0.7111071348190308,
+   'seeratio': 2.0,
+   'aimage': 0.8149999976158142,
+   'bimage': 0.7139999866485596,
+   'aimagerat': 0.6525334715843201,
+   'bimagerat': 0.5716673731803894,
+   'elong': 1.1414566040039062,
+   'nneg': 3,
+   'nbad': 0,
+   'rb': 0.8199999928474426,
+   'ssdistnr': -999.0,
+   'ssmagnr': -999.0,
+   'ssnamenr': 'null',
+   'sumrat': 0.98200523853302,
+   'magapbig': 19.729999542236328,
+   'sigmagapbig': 0.2784999907016754,
+   'ranr': 180.0418705,
+   'decnr': 0.9809701,
+   'sgmag1': 19.60409927368164,
+   'srmag1': 19.343900680541992,
+   'simag1': 18.898300170898438,
+   'szmag1': 18.829299926757812,
+   'sgscore1': 0.9935420155525208,
+   'distpsnr1': 0.4004487693309784,
+   'ndethist': 215,
+   'ncovhist': 2401,
+   'jdstarthist': 2458854.0023958,
+   'jdendhist': 2460840.695,
+   'scorr': 7.08878183364868,
+   'tooflag': 0,
+   'objectidps1': 109171800418847638,
+   'objectidps2': 109171800371024035,
+   'sgmag2': -999.0,
+   'srmag2': -999.0,
+   'simag2': 21.496999740600586,
+   'szmag2': 20.98539924621582,
+   'sgscore2': 0.0,
+   'distpsnr2': 20.905359268188477,
+   'objectidps3': -999,
+   'sgmag3': -999.0,
+   'srmag3': -999.0,
+   'simag3': -999.0,
+   'szmag3': -999.0,
+   'sgscore3': -999.0,
+   'distpsnr3': -999.0,
+   'nmtchps': 2,
+   'rfid': 472120107,
+   'jdstartref': 2458202.790625,
+   'jdendref': 2458461.999109,
+   'nframesref': 15,
+   'rbversion': 't17_f5_c3',
+   'dsnrms': 6.182764053344727,
+   'ssnrms': 11.539521217346191,
+   'dsdiff': -5.356757164001465,
+   'magzpsci': 26.274717330932617,
+   'magzpsciunc': 1.3052699614490848e-05,
+   'magzpscirms': 0.03752399981021881,
+   'nmatches': 408,
+   'clrcoeff': -0.069473996758461,
+   'clrcounc': 2.0915600543958135e-05,
+   'zpclrcov': -1.505999989603879e-05,
+   'zpmed': 26.231000900268555,
+   'clrmed': 0.6050000190734863,
+   'clrrms': 0.32464098930358887,
+   'neargaia': 0.39950695633888245,
+   'neargaiabright': -999.0,
+   'maggaia': 19.020004272460938,
+   'maggaiabright': -999.0,
+   'exptime': 30.0,
+   'drb': 0.9984015822410583,
+   'drbversion': 'd6_m7'},
+  'coordinates': {'type': 'Point', 'coordinates': [-179.9580301, 0.9809825]}}]</pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0201b9f5">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=712a0cca">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Shut down Docker containers</span>
+<span class="o">!</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>down
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 0/2
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠋</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     Stopping                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.1s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠋</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  Stopping                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.1s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 0/2
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠙</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     Stopping                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.2s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠙</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  Stopping                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.2s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 0/2
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠹</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     Stopping                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.3s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠹</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  Removing                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.3s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 1/2
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠸</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     Stopping                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.4s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.3s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre></pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 2/3</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.5s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.3s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠋</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Network boom-benchmarking_default       Removing                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.0s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 2/3
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.5s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.3s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>⠙</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Network boom-benchmarking_default       Removing                        </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.1s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre></pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[+] Running 3/3</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-mongo-1     </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.5s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Container boom-benchmarking-postgres-1  </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.3s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+ </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✔</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> Network boom-benchmarking_default       </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Removed</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>                         </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0.2s </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=af9381b6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Write results out to file</span>
@@ -8588,7 +9154,7 @@ Data and pipelines are up to date.
 
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"results/postgres.json"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"results/mongo.json"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>

@@ -89,9 +89,9 @@ stages:
         cache: false
         persist: false
     - .calkit/notebooks/executed/notebooks/benchmark-mongo.ipynb:
-        cache: true
+        cache: false
     - .calkit/notebooks/html/notebooks/benchmark-mongo.html:
-        cache: true
+        cache: false
     desc: Automatically generated from the 'benchmark-mongo' stage in 
       calkit.yaml. Changes made here will be overwritten.
   _clean-nb-benchmark-pg:
@@ -116,9 +116,9 @@ stages:
         cache: false
         persist: false
     - .calkit/notebooks/executed/notebooks/benchmark-pg.ipynb:
-        cache: true
+        cache: false
     - .calkit/notebooks/html/notebooks/benchmark-pg.html:
-        cache: true
+        cache: false
     desc: Automatically generated from the 'benchmark-pg' stage in calkit.yaml. 
       Changes made here will be overwritten.
   _clean-nb-summarize:

@@ -212,3 +212,9 @@ data/kowalski.NED.json
 *.pickle
 .tmp
 .venv*
+
+.calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb
+
+.calkit/notebooks/cleaned/notebooks/benchmark-pg.ipynb
+
+.calkit/notebooks/cleaned/notebooks/summarize.ipynb

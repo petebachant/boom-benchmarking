@@ -67,6 +67,9 @@ pipeline:
       outputs:
         - path: results/mongo.json
           storage: git
+      html_storage: git
+      executed_ipynb_storage:
+      cleaned_ipynb_storage:
     benchmark-pg:
       kind: jupyter-notebook
       notebook_path: notebooks/benchmark-pg.ipynb
@@ -77,6 +80,9 @@ pipeline:
       outputs:
         - path: results/postgres.json
           storage: git
+      html_storage: git
+      executed_ipynb_storage:
+      cleaned_ipynb_storage:
     summarize:
       kind: jupyter-notebook
       notebook_path: notebooks/summarize.ipynb
@@ -86,6 +92,7 @@ pipeline:
         - results/postgres.json
       html_storage: git
       executed_ipynb_storage: git
+      cleaned_ipynb_storage:
 datasets:
   - path: data/kowalski.NED.json.gz
     title: NED alert archive from Kowalski
