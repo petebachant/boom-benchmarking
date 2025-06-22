@@ -8,6 +8,7 @@ questions:
   - Which configuration is faster to query ~1 million alerts?
   - Which configuration is faster to run a cone search cross-match query?
   - Which configuration is faster to run a set of filters on a single alert?
+  - Is it faster to filter alerts in memory or in the database?
 dependencies:
   - tar
   - gunzip
