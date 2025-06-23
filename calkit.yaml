@@ -64,7 +64,7 @@ pipeline:
       notebook_path: notebooks/benchmark-mongo.ipynb
       environment: py
       inputs:
-        - docker-compose.yaml
+        - docker-compose.mongo.yaml
       outputs:
         - path: results/mongo.json
           storage: git
@@ -76,8 +76,9 @@ pipeline:
       notebook_path: notebooks/benchmark-pg.ipynb
       environment: py
       inputs:
-        - docker-compose.yaml
+        - docker-compose.postgres.yaml
         - envs/Dockerfile.pg-q3c
+        - envs/init-q3c.sql
       outputs:
         - path: results/postgres.json
           storage: git

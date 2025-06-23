@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: pg16-q3c-boom
+    hostname: postgres
+    ports:
+      - "5435:5432"
+    restart: always
+    build:
+      context: ./envs
+      dockerfile: Dockerfile.pg-q3c
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

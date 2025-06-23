@@ -82,7 +82,7 @@ stages:
       "notebooks/benchmark-mongo.ipynb"
     deps:
     - .calkit/notebooks/cleaned/notebooks/benchmark-mongo.ipynb
-    - docker-compose.yaml
+    - docker-compose.mongo.yaml
     - .calkit/env-locks/py.txt
     outs:
     - results/mongo.json:
@@ -108,8 +108,9 @@ stages:
       "notebooks/benchmark-pg.ipynb"
     deps:
     - .calkit/notebooks/cleaned/notebooks/benchmark-pg.ipynb
-    - docker-compose.yaml
+    - docker-compose.postgres.yaml
     - envs/Dockerfile.pg-q3c
+    - envs/init-q3c.sql
     - .calkit/env-locks/py.txt
     outs:
     - results/postgres.json:
