@@ -23,7 +23,7 @@ beautifulsoup4==4.13.4
 bibtexparser==1.4.3
 billiard==4.2.1
 bleach==6.2.0
-calkit-python==0.24.0
+calkit-python==0.24.1
 celery==5.5.3
 certifi==2025.6.15
 cffi==1.17.1
@@ -134,7 +134,6 @@ prometheus-client==0.22.1
 prompt-toolkit==3.0.51
 propcache==0.3.2
 psutil==7.0.0
-psycopg2==2.9.10
 psycopg2-binary==2.9.10
 ptyprocess==0.7.0
 pure-eval==0.2.3
