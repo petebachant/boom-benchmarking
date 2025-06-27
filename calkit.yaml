@@ -27,7 +27,7 @@ environments:
     prefix: .venv-duckdb
     python: "3.12.4"
   analyze:
-    path: requirements.txt
+    path: envs/analyze.txt
     kind: uv-venv
     prefix: .venv-analyze
     python: 3.12.4
@@ -93,7 +93,7 @@ pipeline:
     summarize:
       kind: jupyter-notebook
       notebook_path: notebooks/summarize.ipynb
-      environment: py
+      environment: analyze
       inputs:
         - results/mongo.json
         - results/postgres.json
