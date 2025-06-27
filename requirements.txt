@@ -1,0 +1,7 @@
+pandas
+polars
+great_tables
+duckdb
+ipykernel
+plotly
+matplotlib

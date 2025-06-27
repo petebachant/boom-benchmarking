@@ -26,6 +26,11 @@ environments:
     kind: uv-venv
     prefix: .venv-duckdb
     python: "3.12.4"
+  analyze:
+    path: requirements.txt
+    kind: uv-venv
+    prefix: .venv-analyze
+    python: 3.12.4
 pipeline:
   stages:
     get-ztf-data:
