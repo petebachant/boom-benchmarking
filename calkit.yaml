@@ -6,8 +6,10 @@ git_repo_url: https://github.com/petebachant/boom-benchmarking
 questions:
   - Which configuration is faster to insert ~1 million alerts?
   - Which configuration is faster to query ~1 million alerts?
-  - Which configuration is faster to run a cone search cross-match query?
-  - Which configuration is faster to run a set of filters on a single alert?
+  - Which configuration is faster to run a cone search cross-match
+    query?
+  - Which configuration is faster to run a set of filters on a single
+    alert?
   - Is it faster to filter alerts in memory or in the database?
 dependencies:
   - tar
@@ -128,8 +130,8 @@ notebooks:
       and querying alerts.
   - path: notebooks/inspect-alert.ipynb
     title: Inspect alert structure
-    description: >
-      This notebook shows the structure of the ZTF and NED alerts.
+    description: This notebook shows the structure of the ZTF and NED
+      alerts.
     stage: inspect-alert
 showcase:
   - notebook: notebooks/summarize.ipynb

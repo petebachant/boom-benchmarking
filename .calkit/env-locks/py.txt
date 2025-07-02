@@ -23,7 +23,7 @@ beautifulsoup4==4.13.4
 bibtexparser==1.4.3
 billiard==4.2.1
 bleach==6.2.0
-calkit-python==0.24.1
+calkit-python==0.25.0
 celery==5.5.3
 certifi==2025.6.15
 cffi==1.17.1
