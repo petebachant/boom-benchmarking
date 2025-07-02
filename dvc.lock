@@ -61,13 +61,13 @@ stages:
     deps:
     - path: notebooks/inspect-alert.ipynb
       hash: md5
-      md5: 1e2bff9e3e9552ba2465d9d316c07c54
-      size: 2948
+      md5: 1ac8c0da8a2bff0d0fc53ffa8390d332
+      size: 2767
     outs:
     - path: .calkit/notebooks/cleaned/notebooks/inspect-alert.ipynb
       hash: md5
-      md5: 4d71664891af7084772fb43be5e80b1a
-      size: 2816
+      md5: 1ac8c0da8a2bff0d0fc53ffa8390d332
+      size: 2767
   inspect-alert:
     cmd: calkit nb execute --environment py --no-check --to html "notebooks/inspect-alert.ipynb"
     deps:
@@ -77,8 +77,8 @@ stages:
       size: 3678
     - path: .calkit/notebooks/cleaned/notebooks/inspect-alert.ipynb
       hash: md5
-      md5: 4d71664891af7084772fb43be5e80b1a
-      size: 2816
+      md5: 1ac8c0da8a2bff0d0fc53ffa8390d332
+      size: 2767
     - path: data/kowalski.NED.json
       hash: md5
       md5: 39875806dc1306ca9778ee24cb2ec07e
@@ -91,12 +91,12 @@ stages:
     outs:
     - path: .calkit/notebooks/executed/notebooks/inspect-alert.ipynb
       hash: md5
-      md5: a2610b9de687523b40fd4d420c4481a0
-      size: 2404008
+      md5: 278fe26ddb4d35f9a8310784eb53c927
+      size: 2403959
     - path: .calkit/notebooks/html/notebooks/inspect-alert.html
       hash: md5
-      md5: 17bd80137bd5b7e37e4fd0f51c5ae976
-      size: 4563592
+      md5: f72a092f0ca3059a37361a6a718328e8
+      size: 4563543
   avro-to-docs:
     cmd: calkit xenv -n py -- python ".calkit/notebook-stages/avro-to-docs/script.py"
     deps:
