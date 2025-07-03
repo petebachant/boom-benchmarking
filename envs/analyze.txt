@@ -2,6 +2,6 @@ pandas
 polars
 great_tables
 duckdb
-ipykernel
+jupyter
 plotly
 matplotlib
